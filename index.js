@@ -51,43 +51,68 @@ const constraint = {
   },
   r303: {
     filled: true,
-    min:1,max:9
+    min: 1,
+    max: 9,
   },
   r304: {
-    filled: true,min:1,max:7
+    filled: true,
+    min: 1,
+    max: 7,
   },
   r305: {
-    filled: true,min:1,max:8
+    filled: true,
+    min: 1,
+    max: 8,
   },
   r306a: {
-    filled: true,min:1,max:11
+    filled: true,
+    min: 1,
+    max: 11,
   },
   r306b: {
-    filled: { r306a: [4, 5, 6, 7, 8] },min:1,max:8
+    filled: { r306a: [4, 5, 6, 7, 8] },
+    min: 1,
+    max: 8,
   },
   r307a: {
-    filled: true,min:1,max:4
-  }, 
+    filled: true,
+    min: 1,
+    max: 4,
+  },
   r307b1: {
-    filled: { r307a: [1] },min:1,max:5
+    filled: { r307a: [1] },
+    min: 1,
+    max: 5,
   },
   r307b2: {
-    filled: false,min:1,max:5
+    filled: false,
+    min: 1,
+    max: 5,
   },
   r307b3: {
-    filled: false,min:1,max:
+    filled: false,
+    min: 1,
+    max: 5,
   },
   r308: {
-    filled: true,min:0,max:11
+    filled: true,
+    min: 0,
+    max: 11,
   },
   r309a: {
-    filled: true,min:1,max:6
+    filled: true,
+    min: 1,
+    max: 6,
   },
   r309b: {
-    filled: { r309a: [1, 2, 3] },min:1,max:4
+    filled: { r309a: [1, 2, 3] },
+    min: 1,
+    max: 4,
   },
   r310: {
-    filled: { r309a: [1, 2, 3] },min:1,max:6
+    filled: { r309a: [1, 2, 3] },
+    min: 1,
+    max: 6,
   },
 };
 const isian = {
