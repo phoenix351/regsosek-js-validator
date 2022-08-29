@@ -7,6 +7,18 @@ function isBlank(elem = "", nama_var) {
   return pesan;
 }
 
+function minMaxCheck(val, prop, min = 0, max = 0) {
+  pesan = "";
+  //cek min
+  pesan += val < min ? `Isian ${prop} tidak boleh kurang dari ${min}` : "";
+  //cek max jika nilai max lebih dari 0
+  if (max > 0) {
+    console.log("pengen");
+    pesan += val > max ? `Isian ${prop} tidak boleh lebih dari ${max}` : "";
+  }
+  return pesan;
+}
+
 function arrayToString(ar) {
   pesan = "";
   if (ar.length > 0) {
@@ -32,6 +44,18 @@ function getErrorList(obj, cons) {
       if (!cek_filled.status) {
         // tambahkan ke error list
         error_list.push(cek_filled.message);
+      }
+
+      //jika terisi maka cek apakaah ada constrain minmax
+      if (cons[prop]["min"] || cons[prop]["max"]) {
+        let min = cons[prop]["min"] || 0;
+        let max = cons[prop]["max"] || 0;
+
+        let error = minMaxCheck(obj[prop], prop, min, max);
+
+        if (error.length > 5) {
+          error_list.push(error);
+        }
       }
     } else if (cons[prop]["filled"]) {
       // untuk yang bergantung pada rincian lain

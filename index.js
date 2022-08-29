@@ -41,48 +41,53 @@ const constraint = {
   },
   r301b: {
     filled: { r301a: [1] },
+    min: 1,
+    max: 6,
   },
   r302: {
     filled: true,
+    min: 1,
+    max: 997,
   },
   r303: {
     filled: true,
+    min:1,max:9
   },
   r304: {
-    filled: true,
+    filled: true,min:1,max:7
   },
   r305: {
-    filled: true,
+    filled: true,min:1,max:8
   },
   r306a: {
-    filled: true,
+    filled: true,min:1,max:11
   },
   r306b: {
-    filled: true,
+    filled: { r306a: [4, 5, 6, 7, 8] },min:1,max:8
   },
   r307a: {
-    filled: true,
-  },
+    filled: true,min:1,max:4
+  }, 
   r307b1: {
-    filled: { r307a: [1] },
+    filled: { r307a: [1] },min:1,max:5
   },
   r307b2: {
-    filled: false,
+    filled: false,min:1,max:5
   },
   r307b3: {
-    filled: false,
+    filled: false,min:1,max:
   },
   r308: {
-    filled: true,
+    filled: true,min:0,max:11
   },
   r309a: {
-    filled: true,
+    filled: true,min:1,max:6
   },
   r309b: {
-    filled: { r309a: [1, 2, 3] },
+    filled: { r309a: [1, 2, 3] },min:1,max:4
   },
   r310: {
-    filled: { r309a: [1, 2, 3] },
+    filled: { r309a: [1, 2, 3] },min:1,max:6
   },
 };
 const isian = {
@@ -98,7 +103,7 @@ const isian = {
   r112: 7,
   r301a: 2,
   r301b: 2,
-  r302: 140,
+  r302: 1400,
   r303: 2,
   r304: 2,
   r305: 2,
