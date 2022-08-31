@@ -29,7 +29,7 @@ const constraint = {
   r112: {
     filled: true,
   },
-  r115: {
+  r114: {
     filled: true,
     length: 16,
   },
@@ -113,6 +113,83 @@ const constraint = {
     filled: { r309a: [1, 2, 3] },
     min: 1,
     max: 6,
+  },
+  //blok 4
+  k_art: {
+    r401: {
+      filled: true,
+    },
+    r402: {
+      filled: true,
+      min: 1,
+      max: "r112",
+    },
+    r403: {
+      filled: true,
+      length: 16,
+    },
+    r404: {
+      filled: true,
+      min: 1,
+      max: 5,
+    },
+    r405: {
+      filled: {
+        r404: [1, 4],
+      },
+      min: 1,
+      max: 2,
+    },
+    r406tgl: {
+      filled: {
+        r404: [1, 4],
+      },
+      min: 1,
+      max: 31,
+    },
+    r406bln: {
+      filled: {
+        r404: [1, 4],
+      },
+      min: 1,
+      max: 12,
+    },
+    r406thn: {
+      filled: {
+        r404: [1, 4],
+      },
+      min: 1900,
+      max: 2023,
+    },
+    r407: {
+      filled: {
+        r404: [1, 4],
+      },
+      min: 0,
+      max: 98,
+    },
+    r408: {
+      filled: {
+        r404: [1, 4],
+      },
+      min: 1,
+      max: 4,
+    },
+    r409: {
+      filled: {
+        r404: [1, 4],
+      },
+      min: 1,
+      max: 8,
+    },
+    //wanita alias r405 = 2
+    //usia 10-54 alias 10 < r407 < 55
+    //408 = [2,3,4]
+    r410: {
+      filled: "wanita_produktif",
+      min: 1,
+      max: 2,
+    },
   },
 };
 const isian = {
