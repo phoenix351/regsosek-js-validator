@@ -43,6 +43,7 @@ const constraint = {
     filled: {
       type: 0,
     },
+    alphabet_only: true,
   },
   r110: {
     filled: {
@@ -387,6 +388,7 @@ const constraint = {
     min: 1,
     max: 2,
     format_number: true,
+    butuh_listrik: true,
   },
   r502c: {
     filled: {
@@ -395,6 +397,7 @@ const constraint = {
     min: 1,
     max: 2,
     format_number: true,
+    butuh_listrik: true,
   },
   r502d: {
     filled: {
@@ -403,6 +406,7 @@ const constraint = {
     min: 1,
     max: 2,
     format_number: true,
+    butuh_listrik: true,
   },
   r502e: {
     filled: {
@@ -419,6 +423,7 @@ const constraint = {
     min: 1,
     max: 2,
     format_number: true,
+    butuh_listrik: true,
   },
   r502g: {
     filled: {
@@ -435,6 +440,7 @@ const constraint = {
     min: 1,
     max: 2,
     format_number: true,
+    butuh_listrik: true,
   },
   r502i: {
     filled: {
@@ -559,139 +565,164 @@ const constraint = {
   },
 
   //blok 4
-  // blok_4: {
-  //   r401: {
-  //     filled: {
-  //       type: 0,
-  //     },
-  //   },
-  //   r402: {
-  //     filled: {
-  //       type: 0,
-  //     },
-  //     min: 1,
-  //     max: "r112",
-  //   },
-  //   r403: {
-  //     filled: {
-  //       type: 0,
-  //     },
-  //     length: 16,
-  //   },
-  //   r404: {
-  //     filled: {
-  //       type: 0,
-  //     },
-  //     min: 1,
-  //     max: 5,
-  //   },
-  //   r405: {
-  //     filled: {
-  //       type: "1",
-  //       constraint: {
-  //         variableIndependent: "r404",
-  //         value: [1, 4],
-  //         operator: "in",
-  //         blok4: true,
-  //       },
-  //     },
-  //     min: 1,
-  //     max: 2,
-  //   },
-  //   r406tgl: {
-  //     filled: {
-  //       type: "1",
-  //       constraint: {
-  //         variableIndependent: "r404",
-  //         value: [1, 4],
-  //         operator: "in",
-  //         blok4: true,
-  //       },
-  //     },
-  //     min: 1,
-  //     max: 31,
-  //   },
-  //   r406bln: {
-  //     filled: {
-  //       type: "1",
-  //       constraint: {
-  //         variableIndependent: "r404",
-  //         value: [1, 4],
-  //         operator: "in",
-  //         blok4: true,
-  //       },
-  //     },
-  //     min: 1,
-  //     max: 12,
-  //   },
-  //   r406thn: {
-  //     filled: {
-  //       type: "1",
-  //       constraint: {
-  //         variableIndependent: "r404",
-  //         value: [1, 4],
-  //         operator: "in",
-  //         blok4: true,
-  //       },
-  //     },
-  //     min: 1900,
-  //     max: 2023,
-  //   },
-  //   r407: {
-  //     filled: {
-  //       type: "1",
-  //       constraint: {
-  //         variableIndependent: "r404",
-  //         value: [1, 4],
-  //         operator: "in",
-  //         blok4: true,
-  //       },
-  //     },
-  //     min: 0,
-  //     max: 98,
-  //   },
-  //   r408: {
-  //     filled: {
-  //       type: "1",
-  //       constraint: {
-  //         variableIndependent: "r404",
-  //         value: [1, 4],
-  //         operator: "in",
-  //         blok4: true,
-  //       },
-  //     },
-  //     min: 1,
-  //     max: 4,
-  //   },
-  //   r409: {
-  //     filled: {
-  //       type: "1",
-  //       constraint: {
-  //         variableIndependent: "r404",
-  //         value: [1, 4],
-  //         operator: "in",
-  //         blok4: true,
-  //       },
-  //     },
-  //     min: 1,
-  //     max: 8,
-  //   },
-  //   //wanita alias r405 = 2
-  //   //usia 10-54 alias 10 < r407 < 55
-  //   //408 = [2,3,4]
-  //   r410: {
-  //     filled: "wanita_produktif",
-  //     min: 1,
-  //     max: 2,
-  //   },
-  //   r411: {
-  //     filled: {
-  //       type: 0,
-  //     },
-  //     min: 0,
-  //     max: 5,
-  //   },
-  // },
+  blok_4: {
+    r401: {
+      filled: {
+        type: 0,
+      },
+      min: 1,
+      max: "r112",
+      format_number: true,
+    },
+    r402: {
+      filled: {
+        type: 0,
+      },
+      alphabet_only: true,
+    },
+    r403: {
+      filled: {
+        type: 0,
+      },
+      length: 16,
+      format_number: true,
+    },
+    r404: {
+      filled: {
+        type: 0,
+      },
+      min: 1,
+      max: 5,
+      format_number: true,
+    },
+    r405: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 4],
+            operator: "in",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 2,
+      format_number: true,
+    },
+    r406tgl: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 4],
+            operator: "in",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 31,
+      format_number: true,
+    },
+    r406bln: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 4],
+            operator: "in",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 12,
+      format_number: true,
+    },
+    r406thn: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 4],
+            operator: "in",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1900,
+      max: 2023,
+      format_number: true,
+    },
+    r407: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 4],
+            operator: "in",
+            blok4: true,
+          },
+        ],
+      },
+      min: 0,
+      max: 98,
+      format_number: true,
+    },
+    r408: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 4],
+            operator: "in",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 4,
+      format_number: true,
+    },
+    r409: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 4],
+            operator: "in",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 8,
+      format_number: true,
+    },
+    //wanita alias r405 = 2
+    //usia 10-54 alias 10 < r407 < 55
+    //408 = [2,3,4]
+    r410: {
+      filled: "wanita_produktif",
+      min: 1,
+      max: 2,
+    },
+    r411: {
+      filled: {
+        type: 0,
+      },
+      min: 0,
+      max: 5,
+    },
+  },
 };
 const isian = {
   r101: "71",
@@ -712,21 +743,21 @@ const isian = {
   r305: 2,
   r306a: 12,
   r306b: 1,
-  r307a: 2,
+  r307a: 4,
   r307b1: 1,
   r307b2: null,
   r307b3: null,
-  r308: 3,
+  r308: 4,
   r309a: 6,
   r309b: 1,
   r310: 1,
   blok_4: [
     {
-      r401: 1,
-      r402: "Muhammad Putra",
+      r401: "1",
+      r402: "Muhammad Putr",
       r403: "7103091912880021",
       r404: 1,
-      r405: 1,
+      r405: 2,
       r406tgl: 19,
       r406bln: 12,
       r406thn: 1988,
@@ -736,17 +767,17 @@ const isian = {
       r411: 5,
     },
     {
-      r401: 2,
+      r401: "2",
       r402: "Aisyah Putri",
-      r403: "7103095312980001",
-      r404: 1,
-      r405: 2,
+      r403: "",
+      r404: 7,
+      r405: 7,
       r406tgl: 13,
       r406bln: 12,
       r406thn: 1998,
       r407: 23,
       r408: 2,
-      r409: 2,
+      r409: 1,
       r410: 1,
       r411: 5,
     },

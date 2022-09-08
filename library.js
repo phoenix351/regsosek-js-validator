@@ -14,32 +14,33 @@ function arrayToString(ar) {
   return pesan;
 }
 
+const isAlphabetString = (kata) => /^[a-zA-Z\s]+$/.test(kata);
+
 function charCheck(char) {
   /* char : {
         variableDependent : nama variable
         len : panjang karakter
         value : nilai variable
-      tuple : cek variabel apakah ada pada array ? 
+        alphabet_only : apakah hanya berisi alphabet
+        tuple : cek variable apakah ada pada array ? 
     }
     
     
     */
+  let pesan = "";
 
-  if (char.len) {
-    pesan +=
-      value.length != char.len
-        ? `Isian ${char.variabelDependent} panjangnya harus ${char.len} karakter`
-        : "";
+  if (char.len && char.value.length != char.len) {
+    pesan += `Isian ${char.variableDependent} panjangnya harus ${char.len} karakter`;
     return pesan;
-  }
-  if (char.tuple) {
-    pesan += char.tuple.includes(value)
-      ? `Isian ${char.variabelDependent} harus bernilai ${arrayToString(
-          char.tuple
-        )}`
-      : "";
+  } else if (char.alphabet_only && !isAlphabetString(char.value)) {
+    pesan += `Isian ${char.variableDependent}  hanya boleh berisi alphabet dan spasi `;
     return pesan;
+  } else if (char.tuple && char.tuple.includes(char.value)) {
+    pesan += `Isian ${char.variableDependent} harus bernilai ${arrayToString(
+      char.tuple
+    )}`;
   }
+  return pesan;
 }
 
 function numCheck(numeric, value) {
@@ -52,20 +53,24 @@ function numCheck(numeric, value) {
         format_number : true
         program:true
         bulan: berapa
+        butuh_listrik: false,
+        nilai_listrik: 4,
+        nilai_gas : 1
 
     }
     value : nilai variable,
     */
-  pesan = "";
-  console.log({ tipe: typeof value });
+
+  let pesan = "";
   //cek apakah bertipe numeric
 
   if (numeric.format_number) {
     // coba format ke number
     value_converted = Number(value);
+
     //jika nan maka return error
     if (String(Number(value_converted)).toLowerCase() == "nan") {
-      pesan += `Isian ${numeric.variabelDependent} harus berisikan angka`;
+      pesan += `Isian ${numeric.variableDependent} harus berisikan angka`;
       return pesan;
     }
   }
@@ -83,18 +88,41 @@ function numCheck(numeric, value) {
       return pesan;
     }
   }
-  pesan +=
-    value < numeric.min
-      ? `Isian ${numeric.variabelDependent} tidak boleh kurang dari ${numeric.min}`
-      : "";
-
-  //cek max jika nilai max lebih dari 0
-  if (numeric.max > 0) {
-    pesan +=
-      value > numeric.max
-        ? `Isian ${numeric.variabelDependent} tidak boleh lebih dari ${numeric.max}`
-        : "";
+  // cek min jika min > 0
+  if (numeric.min > 0) {
+    if (value < numeric.min) {
+      pesan += `Isian ${numeric.variableDependent} tidak boleh kurang dari ${numeric.min}`;
+      return pesan;
+    }
   }
+  //cek max jika nilai max lebih dari 0
+
+  if (numeric.max > 0) {
+    if (value > numeric.max) {
+      pesan += `Isian ${numeric.variableDependent} tidak boleh lebih dari ${numeric.max}`;
+      return pesan;
+    }
+  }
+  //cek apakah butuh listrik namun tidak ada listrik di r307
+  let listrik_cek = numeric.butuh_listrik && numeric.nilai_listrik == 4;
+  if (listrik_cek) {
+    pesan += `Isian ${numeric.variableDependent} bernilai 1 maka isian r307 tidak boleh bernilai 4`;
+    return pesan;
+  }
+
+  // kasus gas >= 5,5 kg
+
+  if (numeric.variableDependent == "r502a") {
+    //cek kasus
+    if (value == 1 && ![2, 3].includes(numeric.nilai_gas)) {
+      // kasus 1 ; r502 = 1 namun r308 bukan 2 atau 3
+      pesan += `Isian r502 bernilai 1 namun r308 bukan 2 atau 3`;
+    } else if (value != 1 && [2, 3].includes(numeric.nilai_gas)) {
+      // kasus 2; r308 2 atau 3 namun r502 != 1
+      pesan += `Isian r502 tidak bernilai 1 namun r308 bernilai 2 atau 3`;
+    }
+  }
+
   return pesan;
 }
 
@@ -116,15 +144,12 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
     Objek merupakan objek yang berisikan isian kuesioner
     
     */
-  console.log(
-    `Checking error for ${variableDependent} value : ${objek[variableDependent]}`
-  );
+
   let list_pesan = [];
   let isRequired = false;
   let isBlank = true;
 
   if (filled.type == 0) {
-    console.log("masuk");
     //untuk case boolean atau 0
 
     // Jika panjanganya kurang dari 1 atau undefined
@@ -133,16 +158,15 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
       String(objek[variableDependent]).length < 1 ||
       objek[variableDependent] == null;
     if (isRequired && isBlank) {
-      console.log("truee");
-      pesan = `Isian ${variableDependent} harus diisi`;
+      pesan = `Isian ${variableDependent} tidak boleh kosong atau blank`;
       list_pesan.push(pesan);
     }
   } else if (filled.type == 1) {
     //untuk case single atau multiple
     // untuk setiap constraint
-    console.log("masuk advanced constraint ;))");
     for (i in filled.constraint) {
       let constraint = filled.constraint[i];
+
       //jika equally
       if (constraint.operator == "=") {
         isRequired = constraint.blok4
@@ -151,7 +175,6 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
         isBlank =
           !String(objek[variableDependent]).length ||
           objek[variableDependent] == null;
-        console.log({ isRequired, isBlank });
         if (isRequired && isBlank) {
           //jika required maka cek apakah blank ?
           pesan = `Isian ${variableDependent} harus terisi karena isian ${constraint.variableIndependent} bernilai ${constraint.value}`;
@@ -161,27 +184,27 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == "in") {
-        console.log("masuk in chekcing.. ");
         isRequired = constraint.blok4
-          ? constraint.value.includes(
-              objek["blok4"][constraint[variableIndependent]]
-            )
+          ? constraint.value.includes(objek[constraint.variableIndependent])
           : constraint.value.includes(objek[constraint.variableIndependent]);
 
         isBlank =
           !String(objek[variableDependent]).length ||
           objek[variableDependent] == null;
-        console.log({ isRequired, isBlank });
         if (isRequired && isBlank) {
-          pesan = `Isian ${variableDependent} harus terisi karena isian ${constraint.variableIndependent} bernilai  ${constraint.value}`;
+          pesan = `Isian ${variableDependent} harus terisi karena isian ${
+            constraint.variableIndependent
+          } bernilai  ${arrayToString(constraint.value)}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          pesan = `Isian ${variableDependent} harus kosong karena isian ${constraint.variableIndependent} bernilai bukan  ${constraint.value}`;
+          pesan = `Isian ${variableDependent} harus kosong karena isian ${
+            constraint.variableIndependent
+          } bernilai bukan  ${arrayToString(constraint.value)}`;
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == ">") {
         let cek = constraint.blok4
-          ? constraint.value < objek["blok4"][constraint[variableIndependent]]
+          ? constraint.value < objek[constraint.variableIndependent]
           : constraint.value < objek[constraint.variableIndependent];
         if (!cek) {
           pesan = `Isian ${variableDependent} harus terisi karena isian ${constraint.variableIndependent} bernilai tidak lebih dari ${constraint.value}`;
@@ -189,7 +212,7 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
         }
       } else if (constraint.operator == "<") {
         let cek = constraint.blok4
-          ? constraint.value > objek["blok4"][constraint[variableIndependent]]
+          ? constraint.value > objek[constraint.variableIndependent]
           : constraint.value > objek[constraint.variableIndependent];
         if (!cek) {
           pesan = `Isian ${variableDependent} harus terisi karena isian ${constraint.variableIndependent} bernilai tidak kurang dari ${constraint.value}`;
@@ -198,21 +221,60 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
       }
     }
   }
+
   return { list_pesan, isRequired, isBlank };
 }
 
-function getErrorList(obj, cons) {
+function getErrorList(obj, cons, nomor_urut_art = 0, max_art = 0) {
   /*
-    obj merupakan variabel untuk mempresentasikan Objek kuesioner K yang berisikan nilai-nilai
-    cons merupakan variabel berisi batasan-batasan variabel
+    obj merupakan variable untuk mempresentasikan Objek kuesioner K yang berisikan nilai-nilai
+    cons merupakan variable berisi batasan-batasan variable
+    nomor_urut_art,
     */
   let error_list = [];
   // loop constraint
   for (prop in cons) {
     //cek apakah termasuk blok 4
-    console.log({ prop });
     if (prop == "blok_4") {
-      console.log("sampe di blok 4");
+      //loooping objek
+      let { blok_4_const, jumlah_krt, jumlah_suami_istri } = {
+        blok_4_const: cons["blok_4"],
+        jumlah_krt: 0,
+        jumlah_suami_istri: 0,
+      };
+
+      for (blok_4_i in obj["blok_4"]) {
+        console.log(`Processing ART ke ${blok_4_i}`);
+        let objek_blok_4 = obj["blok_4"][blok_4_i];
+        // panggil get error list untuk blok 4
+        let error_art = getErrorList(
+          objek_blok_4,
+          blok_4_const,
+          Number(obj["blok_4"][blok_4_i]["r401"]),
+          obj["r112"]
+        );
+        if ([1, 2].includes(obj["blok_4"][blok_4_i]["r409"])) {
+          jumlah_krt += obj["blok_4"][blok_4_i]["r409"] == 1 ? 1 : 0;
+          jumlah_suami_istri += obj["blok_4"][blok_4_i]["r409"] == 2 ? 1 : 0;
+        }
+        console.log({ jumlah_krt, jumlah_suami_istri });
+
+        if (jumlah_krt > 1) {
+          pesan = `Jumlah kepala keluarga tidak boleh lebih dari 1`;
+          error_list.push(pesan);
+        }
+        if (jumlah_suami_istri > 1) {
+          pesan = `Jumlah suami/istri tidak boleh lebih dari 1`;
+          error_list.push(pesan);
+        }
+        //push jika error art lebih dari 1 alias ada
+        if (error_art.length > 0) {
+          for (i in error_art) {
+            error_list.push(error_art[i]);
+          }
+        }
+      }
+      continue;
     }
     //cek Filled
     let { list_pesan, isRequired, isBlank } = isFilledProcessor({
@@ -220,45 +282,56 @@ function getErrorList(obj, cons) {
       objek: obj,
       variableDependent: prop,
     });
-    console.log({ list_pesan });
     if (list_pesan.length > 0) {
-      console.log("push");
       for (i in list_pesan) {
         error_list.push(list_pesan[i]);
       }
     }
 
     if (!isRequired || isBlank) {
-      console.log("skip");
-
       continue;
     }
 
     //cek numeric const
-    let hasilNumeric = numCheck(
-      {
-        variabelDependent: prop,
-        min: cons[prop]["min"] ?? 0,
-        max: cons[prop]["max"] ?? 0,
-        format_number: cons[prop]["format_number"] ?? false,
-        program: cons[prop]["program"] ?? false,
-        bulan: obj[cons[prop]["bulan"]] ?? 1,
-      },
-      obj[prop]
-    );
+    let numeric = {
+      variableDependent: prop,
+      min: cons[prop]["min"] ?? 0,
+      max: cons[prop]["max"] ?? 0,
+      format_number: cons[prop]["format_number"] ?? false,
+      program: cons[prop]["program"] ?? false,
+      bulan: obj[cons[prop]["bulan"]] ?? 1,
+      butuh_listrik: cons[prop]["butuh_listrik"] ?? false,
+      nilai_listrik: obj["r307a"],
+      nilai_gas: obj["r308"],
+    };
+
+    if (numeric.max.length > 0 && typeof numeric.max != "number") {
+      numeric.max = max_art;
+    }
+
+    let hasilNumeric = numCheck(numeric, obj[prop]);
+
     if (hasilNumeric.length > 0) {
       error_list.push(hasilNumeric);
     }
-    // // cek char
-    // let hasilChar = charCheck({
-    //   variableDependent: prop,
-    //   len: cons[prop]["length"] ?? 1,
-    //   value: obj[prop],
-    //   tuple: cons[prop]["tuple"] ?? false,
-    // });
-    // if (hasilChar.length > 0) {
-    //   error_list.push(hasilChar);
-    // }
+    // cek char
+
+    let hasilChar = charCheck({
+      variableDependent: prop,
+      len: cons[prop]["length"] ?? 0,
+      alphabet_only: cons[prop]["alphabet_only"] ?? false,
+      value: obj[prop],
+      tuple: cons[prop]["tuple"] ?? false,
+    });
+
+    if (hasilChar.length > 0) {
+      error_list.push(hasilChar);
+    }
+  }
+  if (nomor_urut_art > 0) {
+    error_list = error_list.map(
+      (p) => `ART nomor urut : ${nomor_urut_art} ${p}`
+    );
   }
   console.log({ error_list });
 
