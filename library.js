@@ -15,6 +15,7 @@ function arrayToString(ar) {
 }
 
 const isAlphabetString = (kata) => /^[a-zA-Z\s]+$/.test(kata);
+const isBlankChar = (char) => String(char).length < 1 || char == null;
 
 function charCheck(char) {
   /* char : {
@@ -56,6 +57,8 @@ function numCheck(numeric, value) {
         butuh_listrik: false,
         nilai_listrik: 4,
         nilai_gas : 1
+        tuple_num : false
+        allowNullAs99 : false
 
     }
     value : nilai variable,
@@ -88,6 +91,7 @@ function numCheck(numeric, value) {
       return pesan;
     }
   }
+
   // cek min jika min > 0
   if (numeric.min > 0) {
     if (value < numeric.min) {
@@ -95,16 +99,26 @@ function numCheck(numeric, value) {
       return pesan;
     }
   }
+
   //cek max jika nilai max lebih dari 0
 
-  if (numeric.variableDependent == "r406thn") {
-  }
   if (numeric.max > 0) {
-    if (value > numeric.max) {
+    if (value > numeric.max && !(value == 99 && numeric.allowNullAs99)) {
       pesan += `Isian ${numeric.variableDependent} tidak boleh lebih dari ${numeric.max}`;
       return pesan;
     }
   }
+
+  // cek apakah ada variable tuple ?
+  if (numeric.tuple_num) {
+    if (!numeric.tuple_num.includes(value)) {
+      pesan += `Isian ${
+        numeric.variableDependent
+      } tidak bernilai ${arrayToString(numeric.tuple_num)}`;
+      return pesan;
+    }
+  }
+
   //cek apakah butuh listrik namun tidak ada listrik di r307
   let listrik_cek = numeric.butuh_listrik && numeric.nilai_listrik == 4;
   if (listrik_cek) {
@@ -129,6 +143,69 @@ function numCheck(numeric, value) {
 }
 function handleSpecialConstraint(constraintName, constraintObject) {
   let errorList = [];
+  if (constraintName == "elderOrDifable") {
+    /*
+    constraintObject : {
+      r407
+      428 a- j
+      r429
+
+    }
+    */
+    let {
+      r407,
+      r428a,
+      r428b,
+      r428c,
+      r428d,
+      r428e,
+      r428f,
+      r428g,
+      r428h,
+      r428i,
+      r428j,
+      r429,
+      variableDependent,
+    } = constraintObject;
+    const isBlank = isBlankChar(r429);
+    let isDifable = false;
+    let lastPropDifable = "";
+    for (prop in constraintObject) {
+      if (prop.slice(0, 4) == "r428") {
+        isDifable = [1, 2].includes(constraintObject[prop]) ? true : false;
+        if (isDifable) {
+          lastPropDifable = prop;
+          break;
+        }
+      }
+    }
+
+    if (r407 >= 60 && !isBlank) {
+      return errorList;
+    } else if (isDifable && !isBlank) {
+      return errorList;
+    }
+
+    if (r407 >= 60 && isBlank) {
+      let message = "R407 lebih dari 60, Namun r429 kosong";
+      let error_var = "R429";
+      errorList.push({ error_var, message });
+    } else if (r407 < 60 && !isBlank) {
+      let message = "R407 kurang dari 60, Namun r429 terisi";
+      let error_var = "R429";
+      errorList.push({ error_var, message });
+    }
+
+    if (isDifable && isBlank) {
+      let message = `${lastPropDifable} bernilai 1 atau 2 , Namun r429 kosong`;
+      let error_var = "R429";
+      errorList.push({ error_var, message });
+    } else if (!isDifable && !isBlank) {
+      let message = `R428a-R428j tidak ada yang bernilai 1 atau 2 , Namun r429 terisi`;
+      let error_var = "R429";
+      errorList.push({ error_var, message });
+    }
+  }
   if (constraintName == "wanita fertil") {
     /*
     constraintObject : {
@@ -201,9 +278,8 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
 
     // Jika panjanganya kurang dari 1 atau undefined
     isRequired = true;
-    isBlank =
-      String(objek[variableDependent]).length < 1 ||
-      objek[variableDependent] == null;
+    isBlank = isBlankChar(objek[variableDependent]);
+
     if (isRequired && isBlank) {
       pesan = `Isian ${variableDependent} tidak boleh kosong atau blank`;
       list_pesan.push(pesan);
@@ -211,23 +287,7 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
   } else if (filled.type == 1) {
     //untuk case single atau multiple
 
-    //case wanita produktif
-    if (filled.constraint.nama) {
-      let constraintObject = {
-        r405: objek["r405"],
-        r407: objek["r407"],
-        r408: objek["r408"],
-        r410: objek["r410"],
-      };
-      let constraintName = filled.constraint.nama;
-      let error_410 = handleSpecialConstraint(constraintName, constraintObject);
-      if (error_410.length > 0) {
-        for (i in error_410) {
-          list_pesan.push(error_410[i]);
-        }
-      }
-      return list_pesan;
-    }
+    //case pengasuh
 
     // untuk setiap constraint
     for (i in filled.constraint) {
@@ -267,14 +327,14 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
         }
       } else if (constraint.operator == ">") {
         isRequired = constraint.blok4
-          ? constraint.value > objek[constraint.variableIndependent]
-          : constraint.value > objek[constraint.variableIndependent];
+          ? objek[constraint.variableIndependent] > constraint.value
+          : objek[constraint.variableIndependent] > constraint.value;
 
         if (isRequired && isBlank) {
-          pesan = `Isian ${variableDependent} harus terisi karena isian ${constraint.variableIndependent} bernilai tidak lebih dari ${constraint.value}`;
+          pesan = `Isian ${variableDependent} harus terisi karena isian ${constraint.variableIndependent} bernilai lebih dari ${constraint.value}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          pesan = `Isian ${variableDependent} terisi tetapi isian ${constraint.variableIndependent} bernillai kurang dari ${constraint.value}`;
+          pesan = `Isian ${variableDependent} terisi tetapi isian ${constraint.variableIndependent} bernilai kurang dari ${constraint.value}`;
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == "<") {
@@ -285,13 +345,76 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
           pesan = `Isian ${variableDependent} harus terisi karena isian ${constraint.variableIndependent} bernilai tidak kurang dari ${constraint.value}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          pesan = `Isian ${variableDependent} terisi karena isian ${constraint.variableIndependent} lebih dari ${constraint.value}`;
+          pesan = `Isian ${variableDependent} terisi, namun isian ${constraint.variableIndependent} lebih dari ${constraint.value}`;
           list_pesan.push(pesan);
+        }
+      } else if (constraint.operator == "minMax") {
+        let variableIndependent = objek[constraint.variableIndependent];
+        let { min, max } = constraint.value;
+        isRequired = variableIndependent >= min && variableIndependent <= max;
+
+        if (isRequired && isBlank) {
+          pesan = `Isian ${variableDependent} harus terisi karena isian ${variableIndependent} berada dalam range ${min}-${max}`;
+          list_pesan.push(pesan);
+        } else if (!isRequired && !isBlank) {
+          pesan = `Isian ${variableDependent} terisi namun isian ${variableIndependent} tidak berada dalam range ${min}-${max}`;
+          list_pesan.push(pesan);
+        }
+      } else if (constraint.operator == "special") {
+        let constraintObject = {};
+
+        {
+          if (constraint.nama == "wanita fertil") {
+            constraintObject = {
+              r405: objek["r405"],
+              r407: objek["r407"],
+              r408: objek["r408"],
+              r410: objek["r410"],
+            };
+          } else if (constraint.nama == "elderOrDifable") {
+            constraintObject = (({
+              r407,
+              r428a,
+              r428b,
+              r428c,
+              r428d,
+              r428e,
+              r428f,
+              r428g,
+              r428h,
+              r428i,
+              r428j,
+              r429,
+            }) => ({
+              r407,
+              r428a,
+              r428b,
+              r428c,
+              r428d,
+              r428e,
+              r428f,
+              r428g,
+              r428h,
+              r428i,
+              r428j,
+              r429,
+            }))(objek);
+          }
+          constraintObject["variableDependent"] = variableDependent;
+          let constraintName = constraint.nama;
+          let error_410 = handleSpecialConstraint(
+            constraintName,
+            constraintObject
+          );
+          if (error_410.length > 0) {
+            for (i in error_410) {
+              list_pesan.push(error_410[i].message);
+            }
+          }
         }
       }
     }
   }
-
   return { list_pesan, isRequired, isBlank };
 }
 
@@ -354,8 +477,9 @@ function getErrorList(obj, cons, nomor_urut_art = 0, max_art = 0) {
     } catch {
       constraintSpecial = false;
     }
+
     if (constraintSpecial) {
-      let list_pesan = isFilledProcessor({
+      let { list_pesan } = isFilledProcessor({
         filled: cons[prop]["filled"],
         objek: obj,
         variableDependent: prop,
@@ -392,6 +516,8 @@ function getErrorList(obj, cons, nomor_urut_art = 0, max_art = 0) {
       butuh_listrik: cons[prop]["butuh_listrik"] ?? false,
       nilai_listrik: obj["r307a"],
       nilai_gas: obj["r308"],
+      tuple_num: cons[prop]["tuple_num"] ?? false,
+      allowNullAs99: cons[prop]["allowNullAs99"] ?? false,
     };
 
     if (numeric.max.length > 0 && typeof numeric.max != "number") {
@@ -422,6 +548,7 @@ function getErrorList(obj, cons, nomor_urut_art = 0, max_art = 0) {
       (p) => `ART nomor urut : ${nomor_urut_art} ${p}`
     );
   }
+
   console.log({ error_list });
 
   return error_list;

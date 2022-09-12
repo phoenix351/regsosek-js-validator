@@ -42,6 +42,9 @@ function getErrorList(obj, cons) {
   let error_list = [];
   // loop constraint
   for (const prop in cons) {
+    //cek apakah termasuk blok 4
+    if (prop == "blok_4") {
+    }
     //cek apakah filled bernilai true
     if (cons[prop]["filled"] === true) {
       //cek isian

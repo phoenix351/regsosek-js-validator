@@ -566,6 +566,9 @@ const constraint = {
 
   //blok 4
   blok_4: {
+    // Keterangan Demografi
+
+    // Nomor urut anggota keluarga
     r401: {
       filled: {
         type: 0,
@@ -574,12 +577,14 @@ const constraint = {
       max: "r112",
       format_number: true,
     },
+    //nama anggota keluarga
     r402: {
       filled: {
         type: 0,
       },
       alphabet_only: true,
     },
+    //nik
     r403: {
       filled: {
         type: 0,
@@ -587,6 +592,7 @@ const constraint = {
       length: 16,
       format_number: true,
     },
+    //keterangan keberadaan anggota keluarga
     r404: {
       filled: {
         type: 0,
@@ -595,6 +601,7 @@ const constraint = {
       max: 5,
       format_number: true,
     },
+    //jenis kelamin
     r405: {
       filled: {
         type: "1",
@@ -611,6 +618,7 @@ const constraint = {
       max: 2,
       format_number: true,
     },
+    //tanggal lahir
     r406tgl: {
       filled: {
         type: "1",
@@ -627,6 +635,7 @@ const constraint = {
       max: 31,
       format_number: true,
     },
+    //bulan lahir
     r406bln: {
       filled: {
         type: "1",
@@ -643,6 +652,7 @@ const constraint = {
       max: 12,
       format_number: true,
     },
+    //tahun lahir
     r406thn: {
       filled: {
         type: "1",
@@ -659,6 +669,7 @@ const constraint = {
       max: 2023,
       format_number: true,
     },
+    //umur
     r407: {
       filled: {
         type: "1",
@@ -675,6 +686,7 @@ const constraint = {
       max: 98,
       format_number: true,
     },
+    //status perkaawinan
     r408: {
       filled: {
         type: "1",
@@ -691,6 +703,7 @@ const constraint = {
       max: 4,
       format_number: true,
     },
+    //status hubungan dengan kepala keluarga
     r409: {
       filled: {
         type: "1",
@@ -707,27 +720,587 @@ const constraint = {
       max: 8,
       format_number: true,
     },
-    //wanita alias r405 = 2
-    //usia 10-54 alias 10 < r407 < 55
-    //408 = [2,3,4]
+
+    //status kehamilan
     r410: {
       filled: {
         type: "1",
-        constraint: {
-          nama: "wanita fertil",
-          blok4: true,
-        },
+        constraint: [
+          {
+            nama: "wanita fertil",
+            operator: "special",
+            blok4: true,
+          },
+        ],
+
         min: 1,
         max: 2,
         format_number: true,
       },
     },
+    // kartu identitas
     r411: {
       filled: {
         type: 0,
       },
       min: 0,
       max: 5,
+      format_number: true,
+    },
+
+    // B. Pendidikan
+
+    //partisipasi sekolah
+
+    r412: {
+      filled: {
+        type: 0,
+      },
+      min: 1,
+      max: 3,
+      format_number: true,
+    },
+    //jenjang tertinggi yang pernah diduduki
+    r413: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r412",
+            value: [2, 3],
+            operator: "in",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 23,
+      format_number: true,
+    },
+    // kelas tertinggi
+    r414: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r412",
+            value: [2, 3],
+            operator: "in",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 8,
+      format_number: true,
+    },
+    //ijazah tertinggi
+    r415: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r412",
+            value: [2, 3],
+            operator: "in",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 23,
+      format_number: true,
+    },
+    //C. Ketenagakerjaan
+
+    //apakah bekerja/membantu ?
+    r416a: {
+      filled: {
+        type: 0,
+      },
+      min: 1,
+      max: 2,
+      format_number: true,
+    },
+    // jam kerja
+    r416b: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r416a",
+            value: 1,
+            operator: "=",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 99,
+      format_number: true,
+    },
+    //lapangan usaha
+    r417: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r416a",
+            value: 1,
+            operator: "=",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 26,
+      format_number: true,
+    },
+    //status pekerjaan utama
+    r418: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r416a",
+            value: 1,
+            operator: "=",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 8,
+      format_number: true,
+    },
+    //punya npwp ?
+    r419: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r416a",
+            value: 1,
+            operator: "=",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 3,
+      format_number: true,
+    },
+    // D. Kepemilikan usaha
+
+    //apakah memliki ?
+    r420: {
+      filled: {
+        type: 0,
+      },
+      min: 1,
+      max: 2,
+      format_number: true,
+    },
+    //lapangan usaha dari usaha
+    r421: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r420",
+            value: 1,
+            operator: "=",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 26,
+      format_number: true,
+    },
+    //jumlah pekerja dibayar
+    r422: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r420",
+            value: 1,
+            operator: "=",
+            blok4: true,
+          },
+        ],
+      },
+      min: 0,
+      max: 999,
+      format_number: true,
+    },
+    //jumlah pekerja tidak dibayar
+    r423: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r420",
+            value: 1,
+            operator: "=",
+            blok4: true,
+          },
+        ],
+      },
+      min: 0,
+      max: 99,
+      format_number: true,
+    },
+    //kepemilikan perizinan usaha
+    r424: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r420",
+            value: 1,
+            operator: "=",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 12,
+      format_number: true,
+    },
+    //omzet
+    r425: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r420",
+            value: 1,
+            operator: "=",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 7,
+      format_number: true,
+    },
+    //penggunaan internet  dalam usaha
+    r426: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r420",
+            value: 1,
+            operator: "=",
+            blok4: true,
+          },
+        ],
+      },
+      min: 0,
+      max: 32,
+      format_number: true,
+    },
+
+    // E. Kesehatan
+
+    //status gizi anak
+    r427: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r407",
+            value: 5,
+            operator: "<",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 8,
+      format_number: true,
+    },
+    //melihat
+    r428a: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r407",
+            value: 1,
+            operator: ">",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 4,
+      format_number: true,
+    },
+    //mendengar
+    r428b: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r407",
+            value: 1,
+            operator: ">",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 4,
+      format_number: true,
+    },
+    //mobilitas
+    r428c: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r407",
+            value: 1,
+            operator: ">",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 4,
+      format_number: true,
+    },
+    //motorik halus
+    r428d: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r407",
+            value: 1,
+            operator: ">",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 4,
+      format_number: true,
+    },
+    //belajar
+    r428f: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r407",
+            value: 1,
+            operator: ">",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 4,
+      format_number: true,
+    },
+    //komunikasi
+    r428g: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 4,
+      format_number: true,
+    },
+    // mengurus diri sendiri
+    r428h: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 4,
+      format_number: true,
+    },
+    //mengingat/konsentrasi
+    r428i: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 4,
+      format_number: true,
+    },
+    //kesedihan dan depresi
+    r428j: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 4,
+      format_number: true,
+    },
+
+    //apakah ada pengasuh ?
+    r429: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            nama: "elderOrDifable",
+            operator: "special",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 2,
+      format_number: true,
+    },
+    //penyakit kronis/menahun
+    r430: {
+      filled: {
+        type: 0,
+      },
+      min: 1,
+      max: 18,
+      format_number: true,
+    },
+
+    //jaminan kesehatan
+    r431a: {
+      filled: {
+        type: "0",
+      },
+      min: 1,
+      max: 15,
+      allowNullAs99: true,
+      format_number: true,
+    },
+    // prakerja
+    r431b: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 8,
+      tuple_num: [1, 2, 8],
+      format_number: true,
+    },
+    //kur
+    r431c: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 8,
+      tuple_num: [1, 2, 8],
+      format_number: true,
+    },
+    //pembiayaan umi
+    r431d: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 8,
+      tuple_num: [1, 2, 8],
+      format_number: true,
+    },
+    //pip
+    r431e: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r407",
+            value: { min: 5, max: 30 },
+            operator: "minMax",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 8,
+      tuple_num: [1, 2, 8],
+      format_number: true,
+    },
+    // jaminan ketenagakerjaan
+    r431f: {
+      filled: {
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r407",
+            value: 14,
+            operator: ">",
+            blok4: true,
+          },
+        ],
+      },
+      min: 1,
+      max: 31,
+      allowNullAs99: true,
       format_number: true,
     },
   },
@@ -758,27 +1331,64 @@ const isian = {
   r307b2: null,
   r307b3: null,
   r308: 4,
-  r309a: 6,
-  r309b: null,
-  r310: null,
+  r309a: 1,
+  r309b: 1,
+  r310: 1,
 
   blok_4: [
     {
-      r401: "1",
-      r402: "Muhammad Putr",
-      r403: "7103091912880021",
+      id: 1,
+      r401: 1,
+      r402: "Muhammad Putra",
+      r403: 7103091912880021,
       r404: 1,
       r405: 2,
       r406tgl: 19,
       r406bln: 12,
-      r406thn: 2021,
-      r407: 23,
+      r406thn: 1988,
+      r407: 29,
       r408: 2,
       r409: 4,
-      r410: 2,
+      r410: undefined,
       r411: 4,
+      r412: 3,
+      r413: 19,
+      r414: 8,
+      r415: 19,
+      r416a: 1,
+      r416b: 30,
+      r417: 23,
+      r418: 1,
+      r419: 1,
+      r420: 1,
+      r421: 23,
+      r422: 231,
+      r423: 10,
+      r424: 3,
+      r425: 3,
+      r426: 32,
+      r427: 3,
+      r428a: 4,
+      r428b: 4,
+      r428c: 1,
+      r428d: 4,
+      r428e: 4,
+      r428f: 4,
+      r428g: 4,
+      r428h: 4,
+      r428i: 4,
+      r428j: 4,
+      r429: 1,
+      r430: 1,
+      r431a: 8,
+      r431b: 1,
+      r431c: 1,
+      r431d: 2,
+      r431e: 1,
+      r431f: 99,
     },
     {
+      id_art: 2,
       r401: "2",
       r402: "Aisyah Putri",
       r403: 3302081310980001,
@@ -787,11 +1397,46 @@ const isian = {
       r406tgl: 13,
       r406bln: 12,
       r406thn: 1990,
-      r407: 23,
+      r407: 20,
       r408: 1,
       r409: 1,
       r410: null,
       r411: 1,
+      r412: 3,
+      r413: 19,
+      r414: 8,
+      r415: 19,
+      r416a: 1,
+      r416b: 30,
+      r417: 23,
+      r418: 1,
+      r419: 1,
+      r420: 1,
+      r421: 23,
+      r422: 231,
+      r423: 10,
+      r424: 10,
+      r425: 3,
+      r426: 32,
+      r427: 3,
+      r428a: 4,
+      r428b: 4,
+      r428c: 4,
+      r428d: 4,
+      r428e: 4,
+      r428f: 4,
+      r428g: 4,
+      r428h: 2,
+      r428i: 4,
+      r428j: 4,
+      r429: 2,
+      r430: 1,
+      r431a: 8,
+      r431b: 1,
+      r431c: 1,
+      r431d: 2,
+      r431e: undefined,
+      r431f: 20,
     },
   ],
   r501a: 1,
