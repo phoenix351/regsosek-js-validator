@@ -1,4 +1,4 @@
-# Rule Validasi Regsosek Meta
+# Rule Validasi Pendataan Meta Regsosek
 Merupakan algoritma untuk pemeriksaan isian kuesioner sesuai dengan rule validasi
 ## Requirements
 1. Browser
