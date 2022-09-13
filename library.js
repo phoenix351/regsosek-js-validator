@@ -423,6 +423,8 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
   }
   return { list_pesan, isRequired, isBlank };
 }
+const cekJumlahArt = (jumlahArt, r112) =>
+  Number(jumlahArt) == Number(r112) ? true : false;
 
 function getErrorList(obj, cons, nomor_urut_art = 0, max_art = 0) {
   /*
@@ -436,7 +438,7 @@ function getErrorList(obj, cons, nomor_urut_art = 0, max_art = 0) {
     //cek apakah termasuk blok 4
     if (prop == "blok_4") {
       // cek apakah jumlah blok 4 = 112
-      if (obj["blok_4"].length != Number(obj["r112"])) {
+      if (!cekJumlahArt(obj["blok_4"].length, obj["r112"])) {
         error_list.push("Jumlah ART pada blok 4 tidak sama dengan  isian r112");
       }
       //loooping objek
