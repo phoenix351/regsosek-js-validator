@@ -114,7 +114,6 @@ function numCheck(numeric, value) {
     let tupleString = numeric.tuple_num.map((val) => String(val));
     let valueString = String(value);
     let logika = !tupleString.includes(valueString);
-    console.log({ tupleString, valueString, logika });
     if (logika) {
       pesan += `Isian ${
         numeric.variableDependent
@@ -319,7 +318,6 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
         isRequired = constraint.blok4
           ? tupleString.includes(valueString)
           : tupleString.includes(valueString);
-        console.log({ tupleString, valueString, isRequired });
         if (isRequired && isBlank) {
           pesan = `Isian ${variableDependent} harus terisi karena isian ${
             constraint.variableIndependent
@@ -561,7 +559,7 @@ function getErrorList(obj, cons, nomor_urut_art = 0, max_art = 0) {
     );
   }
 
-  console.log({ error_list });
+  // console.log({ error_list });
 
   return error_list;
 }
