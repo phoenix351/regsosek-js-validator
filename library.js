@@ -435,6 +435,10 @@ function getErrorList(obj, cons, nomor_urut_art = 0, max_art = 0) {
   for (prop in cons) {
     //cek apakah termasuk blok 4
     if (prop == "blok_4") {
+      // cek apakah jumlah blok 4 = 112
+      if (obj["blok_4"].length != Number(obj["r112"])) {
+        error_list.push("Jumlah ART pada blok 4 tidak sama dengan  isian r112");
+      }
       //loooping objek
       let { blok_4_const, jumlah_krt, jumlah_suami_istri } = {
         blok_4_const: cons["blok_4"],
