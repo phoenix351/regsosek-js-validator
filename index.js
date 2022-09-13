@@ -282,9 +282,17 @@ const constraint = {
     max: 2,
     format_number: true,
   },
+
   r501a_bln: {
     filled: {
-      type: 0,
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501a",
+          operator: "=",
+        },
+      ],
     },
     min: 1,
     max: 12,
@@ -292,7 +300,14 @@ const constraint = {
   },
   r501a_thn: {
     filled: {
-      type: 0,
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501a",
+          operator: "=",
+        },
+      ],
     },
     min: 2021,
     max: 2022,
@@ -302,7 +317,14 @@ const constraint = {
   },
   r501b_bln: {
     filled: {
-      type: 0,
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501b",
+          operator: "=",
+        },
+      ],
     },
     min: 1,
     max: 12,
@@ -310,7 +332,14 @@ const constraint = {
   },
   r501b_thn: {
     filled: {
-      type: 0,
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501b",
+          operator: "=",
+        },
+      ],
     },
     min: 2021,
     max: 2022,
@@ -320,7 +349,14 @@ const constraint = {
   },
   r501c_bln: {
     filled: {
-      type: 0,
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501c",
+          operator: "=",
+        },
+      ],
     },
     min: 1,
     max: 12,
@@ -328,7 +364,14 @@ const constraint = {
   },
   r501c_thn: {
     filled: {
-      type: 0,
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501c",
+          operator: "=",
+        },
+      ],
     },
     min: 2021,
     max: 2022,
@@ -338,7 +381,14 @@ const constraint = {
   },
   r501d_bln: {
     filled: {
-      type: 0,
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501d",
+          operator: "=",
+        },
+      ],
     },
     min: 1,
     max: 12,
@@ -346,7 +396,14 @@ const constraint = {
   },
   r501d_thn: {
     filled: {
-      type: 0,
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501d",
+          operator: "=",
+        },
+      ],
     },
     min: 2021,
     max: 2022,
@@ -356,7 +413,14 @@ const constraint = {
   },
   r501e_bln: {
     filled: {
-      type: 0,
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501e",
+          operator: "=",
+        },
+      ],
     },
     min: 1,
     max: 12,
@@ -364,7 +428,14 @@ const constraint = {
   },
   r501e_thn: {
     filled: {
-      type: 0,
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501e",
+          operator: "=",
+        },
+      ],
     },
     min: 2021,
     max: 2022,
@@ -1367,7 +1438,7 @@ const isian = {
       r424: 3,
       r425: 3,
       r426: 32,
-      r427: 3,
+      r427: undefined,
       r428a: 4,
       r428b: 4,
       r428c: 1,
@@ -1440,19 +1511,19 @@ const isian = {
     },
   ],
   r501a: 1,
-  r501b: 1,
+  r501b: 2,
   r501c: 1,
   r501d: 1,
   r501e: 1,
 
   r501a_bln: 11,
-  r501b_bln: 9,
+  r501b_bln: undefined,
   r501c_bln: 10,
   r501d_bln: 10,
   r501e_bln: 10,
 
   r501a_thn: 2021,
-  r501b_thn: 2022,
+  r501b_thn: undefined,
   r501c_thn: 2022,
   r501d_thn: 2022,
   r501e_thn: 2022,

@@ -31,15 +31,15 @@ function charCheck(char) {
   let pesan = "";
 
   if (char.len && String(char.value).length != char.len) {
-    pesan += `Isian <a href="#${char.variableDependent}">${char.variableDependent}</a> panjangnya harus ${char.len} karakter`;
+    pesan += `Isian ${char.variableDependent} panjangnya harus ${char.len} karakter`;
     return pesan;
   } else if (char.alphabet_only && !isAlphabetString(char.value)) {
-    pesan += `Isian <a href="#${char.variableDependent}">${char.variableDependent}</a>  hanya boleh berisi alphabet dan spasi `;
+    pesan += `Isian ${char.variableDependent}  hanya boleh berisi alphabet dan spasi `;
     return pesan;
   } else if (char.tuple && char.tuple.includes(char.value)) {
-    pesan += `Isian <a href="#${char.variableDependent}">${
-      char.variableDependent
-    }</a> harus bernilai ${arrayToString(char.tuple)}`;
+    pesan += `Isian ${char.variableDependent} harus bernilai ${arrayToString(
+      char.tuple
+    )}`;
   }
   return pesan;
 }
@@ -73,7 +73,7 @@ function numCheck(numeric, value) {
 
     //jika nan maka return error
     if (String(Number(value_converted)).toLowerCase() == "nan") {
-      pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> harus berisikan angka`;
+      pesan += `Isian ${numeric.variableDependent} harus berisikan angka`;
       return pesan;
     }
   }
@@ -84,10 +84,10 @@ function numCheck(numeric, value) {
   if (numeric.program == true) {
     //case lebih dari  oktober 2022
     if ((value == 2022 && numeric.bulan > 10) || value > 2022) {
-      pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> lebih dari periode yang telah ditetapkan (Oktober 2022)`;
+      pesan += `Isian ${numeric.variableDependent} lebih dari periode yang telah ditetapkan (Oktober 2022)`;
       return pesan;
     } else if ((value == 2021 && numeric.bulan < 10) || value < 2021) {
-      pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> kurang dari periode yang telah ditetapkan (Oktober 2021)`;
+      pesan += `Isian ${numeric.variableDependent} kurang dari periode yang telah ditetapkan (Oktober 2021)`;
       return pesan;
     }
   }
@@ -95,7 +95,7 @@ function numCheck(numeric, value) {
   // cek min jika min > 0
   if (numeric.min > 0) {
     if (value < numeric.min) {
-      pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> tidak boleh kurang dari ${numeric.min}`;
+      pesan += `Isian ${numeric.variableDependent} tidak boleh kurang dari ${numeric.min}`;
       return pesan;
     }
   }
@@ -104,7 +104,7 @@ function numCheck(numeric, value) {
 
   if (numeric.max > 0) {
     if (value > numeric.max && !(value == 99 && numeric.allowNullAs99)) {
-      pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> tidak boleh lebih dari ${numeric.max}`;
+      pesan += `Isian ${numeric.variableDependent} tidak boleh lebih dari ${numeric.max}`;
       return pesan;
     }
   }
@@ -115,9 +115,9 @@ function numCheck(numeric, value) {
     let valueString = String(value);
     let logika = !tupleString.includes(valueString);
     if (logika) {
-      pesan += `Isian <a href="#${numeric.variableDependent}">${
+      pesan += `Isian ${
         numeric.variableDependent
-      }</a> tidak bernilai ${arrayToString(tupleString)}`;
+      } tidak bernilai ${arrayToString(tupleString)}`;
       return pesan;
     }
   }
@@ -125,7 +125,7 @@ function numCheck(numeric, value) {
   //cek apakah butuh listrik namun tidak ada listrik di r307
   let listrik_cek = numeric.butuh_listrik && numeric.nilai_listrik == 4;
   if (listrik_cek) {
-    pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> bernilai 1 maka isian r307 tidak boleh bernilai 4`;
+    pesan += `Isian ${numeric.variableDependent} bernilai 1 maka isian r307 tidak boleh bernilai 4`;
     return pesan;
   }
 
@@ -135,10 +135,10 @@ function numCheck(numeric, value) {
     //cek kasus
     if (value == 1 && ![2, 3].includes(numeric.nilai_gas)) {
       // kasus 1 ; r502 = 1 namun r308 bukan 2 atau 3
-      pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> bernilai 1 namun <a href="#r308">r308</a> bukan 2 atau 3`;
+      pesan += `Isian r502a bernilai 1 namun r308 bukan 2 atau 3`;
     } else if (value != 1 && [2, 3].includes(numeric.nilai_gas)) {
       // kasus 2; r308 2 atau 3 namun r502 != 1
-      pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> tidak bernilai 1 namun <a href="#r308">r308</a> bernilai 2 atau 3`;
+      pesan += `Isian r502a tidak bernilai 1 namun r308 bernilai 2 atau 3`;
     }
   }
 
@@ -190,12 +190,11 @@ function handleSpecialConstraint(constraintName, constraintObject) {
     }
 
     if (r407 >= 60 && isBlank) {
-      let message = "<a href='#r407'>r407</a> lebih dari 60, Namun r429 kosong";
+      let message = "R407 lebih dari 60, Namun r429 kosong";
       let error_var = "R429";
       errorList.push({ error_var, message });
     } else if (r407 < 60 && !isBlank) {
-      let message =
-        "<a href='#r407'>r407</a> kurang dari 60, Namun r429 terisi";
+      let message = "R407 kurang dari 60, Namun r429 terisi";
       let error_var = "R429";
       errorList.push({ error_var, message });
     }
@@ -343,8 +342,9 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == "<") {
-        isRequired = objek[constraint.variableIndependent] < constraint.value;
-
+        isRequired = constraint.blok4
+          ? constraint.value < objek[constraint.variableIndependent]
+          : constraint.value < objek[constraint.variableIndependent];
         if (isRequired && isBlank) {
           pesan = `Isian ${variableDependent} harus terisi karena isian ${constraint.variableIndependent} bernilai tidak kurang dari ${constraint.value}`;
           list_pesan.push(pesan);
@@ -559,7 +559,7 @@ function getErrorList(obj, cons, nomor_urut_art = 0, max_art = 0) {
     );
   }
 
-  //console.log({ error_list });
+  // console.log({ error_list });
 
   return error_list;
 }
