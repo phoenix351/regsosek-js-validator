@@ -1331,7 +1331,7 @@ const isian = {
   r307b2: null,
   r307b3: null,
   r308: 4,
-  r309a: 1,
+  r309a: "1",
   r309b: 1,
   r310: 1,
 

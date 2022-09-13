@@ -111,10 +111,14 @@ function numCheck(numeric, value) {
 
   // cek apakah ada variable tuple ?
   if (numeric.tuple_num) {
-    if (!numeric.tuple_num.includes(value)) {
+    let tupleString = numeric.tuple_num.map((val) => String(val));
+    let valueString = String(value);
+    let logika = !tupleString.includes(valueString);
+    console.log({ tupleString, valueString, logika });
+    if (logika) {
       pesan += `Isian ${
         numeric.variableDependent
-      } tidak bernilai ${arrayToString(numeric.tuple_num)}`;
+      } tidak bernilai ${arrayToString(tupleString)}`;
       return pesan;
     }
   }
@@ -310,10 +314,12 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == "in") {
+        let tupleString = constraint.value.map((val) => String(val));
+        let valueString = String(objek[constraint.variableIndependent]);
         isRequired = constraint.blok4
-          ? constraint.value.includes(objek[constraint.variableIndependent])
-          : constraint.value.includes(objek[constraint.variableIndependent]);
-
+          ? tupleString.includes(valueString)
+          : tupleString.includes(valueString);
+        console.log({ tupleString, valueString, isRequired });
         if (isRequired && isBlank) {
           pesan = `Isian ${variableDependent} harus terisi karena isian ${
             constraint.variableIndependent
