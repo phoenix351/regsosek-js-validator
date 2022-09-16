@@ -1447,10 +1447,10 @@ const goToAnggotaKeluargaVariable = (id) => {
 const isAlphabetString = (kata) => /^[a-zA-Z\s]+$/.test(kata);
 const isBlankChar = (char) => String(char).length < 1 || char == null;
 // const setLink = (namaVar) => `<a href="#${namaVar}">${namaVar}</a>`;
-const setLink = (variableName, id = 0, openModal = false) => {
+const setLink = (variableName, id = 0, art = false) => {
   let blok4 = variableName[1] == 4;
   let variableLink = "";
-  if (!openModal) {
+  if (!art) {
     variableLink = `<a href="#${variableName}">${variableName}</a>`;
     return variableLink;
   } else {
@@ -2026,7 +2026,7 @@ function getErrorList(obj, cons = CONSTRAINT, nomorUrutArt = 0, max_art = 0) {
     let ArtLink = setLink(
       `ART nomor urut : ${nomorUrutArt}`,
       nomorUrutArt,
-      (openModal = true)
+      true
     );
     error_list = error_list.map((error) => `${ArtLink} ${error}`);
   }
