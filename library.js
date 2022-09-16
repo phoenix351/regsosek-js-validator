@@ -1439,22 +1439,22 @@ function arrayToString(ar) {
   }
   return pesan;
 }
-const goToAnggotaKeluargaVariable = (id, variableName) => {
+const goToAnggotaKeluargaVariable = (id) => {
   openModal(`/index.php?r=krt/updateart&id=${id}`);
-  setTimeOut(document.getElementById(variableName).scrollIntoView(), 0);
+  //setTimeOut(document.getElementById(variableName).scrollIntoView(), 0);
   return 0;
 };
 const isAlphabetString = (kata) => /^[a-zA-Z\s]+$/.test(kata);
 const isBlankChar = (char) => String(char).length < 1 || char == null;
 // const setLink = (namaVar) => `<a href="#${namaVar}">${namaVar}</a>`;
-const setLink = (variableName, id = 0) => {
+const setLink = (variableName, id = 0, openModal = false) => {
   let blok4 = variableName[1] == 4;
   let variableLink = "";
-  if (!blok4) {
+  if (!openModal) {
     variableLink = `<a href="#${variableName}">${variableName}</a>`;
     return variableLink;
   } else {
-    variableLink = `<a href="#" onClick="goToAnggotaKeluargaVariable('${id}','${variableName}')">${variableName}</a>`;
+    variableLink = `<a href="#" onClick="goToAnggotaKeluargaVariable('${id}')">${variableName}</a>`;
     return variableLink;
   }
 };
@@ -2021,8 +2021,10 @@ function getErrorList(obj, cons = CONSTRAINT, nomorUrutArt = 0, max_art = 0) {
       error_list.push(hasilChar);
     }
   }
+
   if (nomorUrutArt > 0) {
-    error_list = error_list.map((p) => `ART nomor urut : ${nomorUrutArt} ${p}`);
+    let ArtLink = setLink(`ART nomor urut : ${nomorUrutArt}`, nomorUrutArt);
+    error_list = error_list.map((error) => `${ArtLink} ${error}`);
   }
 
   //console.log({ error_list });
