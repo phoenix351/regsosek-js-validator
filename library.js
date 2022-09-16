@@ -1394,6 +1394,7 @@ function arrayToString(ar) {
 
 const isAlphabetString = (kata) => /^[a-zA-Z\s]+$/.test(kata);
 const isBlankChar = (char) => String(char).length < 1 || char == null;
+const setLink = (namaVar) => `<a href="#${namaVar}">${namaVar}</a>`;
 
 function charCheck(char) {
   /* char : {
@@ -1409,15 +1410,19 @@ function charCheck(char) {
   let pesan = "";
 
   if (char.len && String(char.value).length != char.len) {
-    pesan += `Isian <a href="#${char.variableDependent}">${char.variableDependent}</a> panjangnya harus ${char.len} karakter`;
+    pesan += `Isian ${setLink(char.variableDependent)} panjangnya harus ${
+      char.len
+    } karakter`;
     return pesan;
   } else if (char.alphabet_only && !isAlphabetString(char.value)) {
-    pesan += `Isian <a href="#${char.variableDependent}">${char.variableDependent}</a>  hanya boleh berisi alphabet dan spasi `;
+    pesan += `Isian ${setLink(
+      char.variableDependent
+    )}  hanya boleh berisi alphabet dan spasi `;
     return pesan;
   } else if (char.tuple && char.tuple.includes(char.value)) {
-    pesan += `Isian <a href="#${char.variableDependent}">${
+    pesan += `Isian ${setLink(
       char.variableDependent
-    }</a> harus bernilai ${arrayToString(char.tuple)}`;
+    )} harus bernilai ${arrayToString(char.tuple)}`;
   }
   return pesan;
 }
@@ -1451,7 +1456,9 @@ function numCheck(numeric, value) {
 
     //jika nan maka return error
     if (String(Number(value_converted)).toLowerCase() == "nan") {
-      pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> harus berisikan angka`;
+      pesan += `Isian ${setLink(
+        numeric.variableDependent
+      )} harus berisikan angka`;
       return pesan;
     }
   }
@@ -1462,10 +1469,14 @@ function numCheck(numeric, value) {
   if (numeric.program == true) {
     //case lebih dari  oktober 2022
     if ((value == 2022 && numeric.bulan > 10) || value > 2022) {
-      pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> lebih dari periode yang telah ditetapkan (Oktober 2022)`;
+      pesan += `Isian ${setLink(
+        numeric.variableDependent
+      )} lebih dari periode yang telah ditetapkan (Oktober 2022)`;
       return pesan;
     } else if ((value == 2021 && numeric.bulan < 10) || value < 2021) {
-      pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> kurang dari periode yang telah ditetapkan (Oktober 2021)`;
+      pesan += `Isian ${setLink(
+        numeric.variableDependent
+      )} kurang dari periode yang telah ditetapkan (Oktober 2021)`;
       return pesan;
     }
   }
@@ -1473,7 +1484,9 @@ function numCheck(numeric, value) {
   // cek min jika min > 0
   if (numeric.min > 0) {
     if (value < numeric.min) {
-      pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> tidak boleh kurang dari ${numeric.min}`;
+      pesan += `Isian ${setLink(
+        numeric.variableDependent
+      )} tidak boleh kurang dari ${numeric.min}`;
       return pesan;
     }
   }
@@ -1482,7 +1495,9 @@ function numCheck(numeric, value) {
 
   if (numeric.max > 0) {
     if (value > numeric.max && !(value == 99 && numeric.allowNullAs99)) {
-      pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> tidak boleh lebih dari ${numeric.max}`;
+      pesan += `Isian ${setLink(
+        numeric.variableDependent
+      )} tidak boleh lebih dari ${numeric.max}`;
       return pesan;
     }
   }
@@ -1493,9 +1508,9 @@ function numCheck(numeric, value) {
     let valueString = String(value);
     let logika = !tupleString.includes(valueString);
     if (logika) {
-      pesan += `Isian <a href="#${numeric.variableDependent}">${
+      pesan += `Isian ${setLink(
         numeric.variableDependent
-      }</a> tidak bernilai ${arrayToString(tupleString)}`;
+      )} tidak bernilai ${arrayToString(tupleString)}`;
       return pesan;
     }
   }
@@ -1503,7 +1518,9 @@ function numCheck(numeric, value) {
   //cek apakah butuh listrik namun tidak ada listrik di r307
   let listrik_cek = numeric.butuh_listrik && numeric.nilai_listrik == 4;
   if (listrik_cek) {
-    pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> bernilai 1 maka isian r307 tidak boleh bernilai 4`;
+    pesan += `Isian ${setLink(
+      numeric.variableDependent
+    )} bernilai 1 maka isian r307 tidak boleh bernilai 4`;
     return pesan;
   }
 
@@ -1513,10 +1530,14 @@ function numCheck(numeric, value) {
     //cek kasus
     if (value == 1 && ![2, 3].includes(numeric.nilai_gas)) {
       // kasus 1 ; r502 = 1 namun r308 bukan 2 atau 3
-      pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> bernilai 1 namun <a href="#r308">r308</a> bukan 2 atau 3`;
+      pesan += `Isian ${setLink(
+        numeric.variableDependent
+      )} bernilai 1 namun <a href="#r308">r308</a> bukan 2 atau 3`;
     } else if (value != 1 && [2, 3].includes(numeric.nilai_gas)) {
       // kasus 2; r308 2 atau 3 namun r502 != 1
-      pesan += `Isian <a href="#${numeric.variableDependent}">${numeric.variableDependent}</a> tidak bernilai 1 namun <a href="#r308">r308</a> bernilai 2 atau 3`;
+      pesan += `Isian ${setLink(
+        numeric.variableDependent
+      )} tidak bernilai 1 namun <a href="#r308">r308</a> bernilai 2 atau 3`;
     }
   }
 
@@ -1568,22 +1589,29 @@ function handleSpecialConstraint(constraintName, constraintObject) {
     }
 
     if (r407 >= 60 && isBlank) {
-      let message = "<a href='#r407'>r407</a> lebih dari 60, Namun r429 kosong";
+      let message = `${setLink("r407")} lebih dari 60, Namun ${setLink(
+        "r429"
+      )}kosong`;
       let error_var = "R429";
       errorList.push({ error_var, message });
     } else if (r407 < 60 && !isBlank) {
-      let message =
-        "<a href='#r407'>r407</a> kurang dari 60, Namun r429 terisi";
+      let message = `${setLink("r407")} kurang dari 60, Namun ${setLink(
+        "r429"
+      )} terisi`;
       let error_var = "R429";
       errorList.push({ error_var, message });
     }
 
     if (isDifable && isBlank) {
-      let message = `${lastPropDifable} bernilai 1 atau 2 , Namun r429 kosong`;
+      let message = `${lastPropDifable} bernilai 1 atau 2 , Namun ${setLink(
+        "r429"
+      )} kosong`;
       let error_var = "R429";
       errorList.push({ error_var, message });
     } else if (!isDifable && !isBlank) {
-      let message = `R428a-R428j tidak ada yang bernilai 1 atau 2 , Namun r429 terisi`;
+      let message = `R428a-R428j tidak ada yang bernilai 1 atau 2 , Namun ${setLink(
+        "r429"
+      )} terisi`;
       let error_var = "R429";
       errorList.push({ error_var, message });
     }
@@ -1608,23 +1636,32 @@ function handleSpecialConstraint(constraintName, constraintObject) {
 
     if (isWomen && isFertile && isMarried && is410Blank) {
       let error_var = "r410";
-      let message =
-        "R405 Wanita dengan R407 berada dalam range 10-54 tahun, dan R408 pernah kawin, Namun isian R410 Kosong";
+      let message = `${setLink("r405")} Wanita dengan ${setLink(
+        "r407"
+      )} berada dalam range 10-54 tahun, dan ${setLink(
+        "r408"
+      )} pernah kawin, Namun isian ${setLink("r410")} Kosong`;
       errorList.push({ error_var, message });
     } else if ((!isWomen || !isFertile || !isMarried) && !is410Blank) {
       // jika salah satu tidak terpenuhi namun tidak blank
       if (!isWomen) {
-        let message = "R405 bukan wanita, Namun R410 terisi";
+        let message = `${setLink("r405")} bukan wanita, Namun ${setLink(
+          "r410"
+        )} terisi`;
         let error_var = "R405";
         errorList.push({ error_var, message });
       }
       if (!isFertile) {
-        let message = "R407 diluar range 10-54 tahun, Namun R410 terisi";
+        let message = `${setLink(
+          "r407"
+        )} diluar range 10-54 tahun, Namun ${setLink("r410")} terisi`;
         let error_var = "R407";
         errorList.push({ error_var, message });
       }
       if (!isMarried) {
-        let message = "R408 belum pernah menikah, Namun R410 terisi";
+        let message = `${setLink("r408")} belum pernah menikah, Namun ${setLink(
+          "r410"
+        )} terisi`;
         let error_var = "R408";
         errorList.push({ error_var, message });
       }
@@ -1663,7 +1700,9 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
     isBlank = isBlankChar(objek[variableDependent]);
 
     if (isRequired && isBlank) {
-      pesan = `Isian ${variableDependent} tidak boleh kosong atau blank`;
+      pesan = `Isian ${setLink(
+        variableDependent
+      )} tidak boleh kosong atau blank`;
       list_pesan.push(pesan);
     }
   } else if (filled.type == 1) {
@@ -1673,22 +1712,30 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
 
     // untuk setiap constraint
     for (i in filled.constraint) {
+      let variableIndependentLink = setLink(constraint.variableIndependent);
+      let variableDependentLink = setLink(variableDependent);
       let constraint = filled.constraint[i];
       isBlank =
         !String(objek[variableDependent]).length ||
         objek[variableDependent] == null;
       //jika equally
       if (constraint.operator == "=") {
-        isRequired = constraint.blok4
-          ? constraint.value == objek[constraint.variableIndependent]
-          : constraint.value == objek[constraint.variableIndependent];
+        isRequired = constraint.value == objek[constraint.variableIndependent];
 
         if (isRequired && isBlank) {
           //jika required maka cek apakah blank ?
-          pesan = `Isian ${variableDependent} harus terisi karena isian ${constraint.variableIndependent} bernilai ${constraint.value}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} harus terisi karena isian ${setLink(
+            constraint.variableIndependent
+          )} bernilai ${constraint.value}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          pesan = `Isian ${variableDependent} harus kosong karena isian ${constraint.variableIndependent} bernilai bukan ${constraint.value}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} harus kosong karena isian ${setLink(
+            constraint.variableIndependent
+          )} bernilai bukan ${constraint.value}`;
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == "in") {
@@ -1698,48 +1745,76 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
           ? tupleString.includes(valueString)
           : tupleString.includes(valueString);
         if (isRequired && isBlank) {
-          pesan = `Isian ${variableDependent} harus terisi karena isian ${
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} harus terisi karena isian ${
             constraint.variableIndependent
           } bernilai  ${arrayToString(constraint.value)}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          pesan = `Isian ${variableDependent} harus kosong karena isian ${
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} harus kosong karena isian ${
             constraint.variableIndependent
           } bernilai bukan  ${arrayToString(constraint.value)}`;
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == ">") {
-        isRequired = constraint.blok4
-          ? objek[constraint.variableIndependent] > constraint.value
-          : objek[constraint.variableIndependent] > constraint.value;
+        isRequired = objek[constraint.variableIndependent] > constraint.value;
 
         if (isRequired && isBlank) {
-          pesan = `Isian ${variableDependent} harus terisi karena isian ${constraint.variableIndependent} bernilai lebih dari ${constraint.value}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} harus terisi karena isian ${setLink(
+            constraint.variableIndependent
+          )} bernilai lebih dari ${constraint.value}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          pesan = `Isian ${variableDependent} terisi tetapi isian ${constraint.variableIndependent} bernilai kurang dari ${constraint.value}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} terisi tetapi isian ${setLink(
+            constraint.variableIndependent
+          )} bernilai kurang dari ${constraint.value}`;
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == "<") {
         isRequired = objek[constraint.variableIndependent] < constraint.value;
 
         if (isRequired && isBlank) {
-          pesan = `Isian ${variableDependent} harus terisi karena isian ${constraint.variableIndependent} bernilai tidak kurang dari ${constraint.value}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} harus terisi karena isian ${setLink(
+            constraint.variableIndependent
+          )} bernilai tidak kurang dari ${constraint.value}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          pesan = `Isian ${variableDependent} terisi, namun isian ${constraint.variableIndependent} lebih dari ${constraint.value}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} terisi, namun isian ${setLink(
+            constraint.variableIndependent
+          )} lebih dari ${constraint.value}`;
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == "minMax") {
-        let variableIndependent = objek[constraint.variableIndependent];
+        let variableIndependent = constraint.variableIndependent;
+        let variableIndependentValue = objek[constraint.variableIndependent];
         let { min, max } = constraint.value;
-        isRequired = variableIndependent >= min && variableIndependent <= max;
+        isRequired =
+          variableIndependentValue >= min && variableIndependent <= max;
 
         if (isRequired && isBlank) {
-          pesan = `Isian ${variableDependent} harus terisi karena isian ${variableIndependent} berada dalam range ${min}-${max}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} harus terisi karena isian ${setLink(
+            variableIndependent
+          )} berada dalam range ${min}-${max}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          pesan = `Isian ${variableDependent} terisi namun isian ${variableIndependent} tidak berada dalam range ${min}-${max}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} terisi namun isian ${setLink(
+            variableIndependent
+          )} tidak berada dalam range ${min}-${max}`;
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == "special") {
@@ -1802,11 +1877,11 @@ function isFilledProcessor({ filled, objek, variableDependent }) {
 const cekJumlahArt = (jumlahArt, r112) =>
   Number(jumlahArt) == Number(r112) ? true : false;
 
-function getErrorList(obj, cons = CONSTRAINT, nomor_urut_art = 0, max_art = 0) {
+function getErrorList(obj, cons = CONSTRAINT, nomorUrutArt = 0, max_art = 0) {
   /*
     obj merupakan variable untuk mempresentasikan Objek kuesioner K yang berisikan nilai-nilai
     cons merupakan variable berisi batasan-batasan variable
-    nomor_urut_art,
+    nomorUrutArt,
     */
   let error_list = [];
   // loop constraint
@@ -1815,7 +1890,11 @@ function getErrorList(obj, cons = CONSTRAINT, nomor_urut_art = 0, max_art = 0) {
     if (prop == "blok_4") {
       // cek apakah jumlah blok 4 = 112
       if (!cekJumlahArt(obj["blok_4"].length, obj["r112"])) {
-        error_list.push("Jumlah ART pada blok 4 tidak sama dengan  isian r112");
+        error_list.push(
+          `Jumlah ART pada${setLink(
+            "blok_4"
+          )} tidak sama dengan isian ${setLink("r112")}`
+        );
       }
       //loooping objek
       let { blok_4_const, jumlah_krt, jumlah_suami_istri } = {
@@ -1837,7 +1916,7 @@ function getErrorList(obj, cons = CONSTRAINT, nomor_urut_art = 0, max_art = 0) {
           jumlah_krt += obj["blok_4"][blok_4_i]["r409"] == 1 ? 1 : 0;
           jumlah_suami_istri += obj["blok_4"][blok_4_i]["r409"] == 2 ? 1 : 0;
         }
-
+        // PR
         if (jumlah_krt > 1) {
           pesan = `Jumlah kepala keluarga tidak boleh lebih dari 1`;
           error_list.push(pesan);
@@ -1931,10 +2010,8 @@ function getErrorList(obj, cons = CONSTRAINT, nomor_urut_art = 0, max_art = 0) {
       error_list.push(hasilChar);
     }
   }
-  if (nomor_urut_art > 0) {
-    error_list = error_list.map(
-      (p) => `ART nomor urut : ${nomor_urut_art} ${p}`
-    );
+  if (nomorUrutArt > 0) {
+    error_list = error_list.map((p) => `ART nomor urut : ${nomorUrutArt} ${p}`);
   }
 
   //console.log({ error_list });
