@@ -383,20 +383,7 @@ const isian = {
   r506: 1,
 };
 const isian_2 = {};
-
-let totalTime = performance.now();
-let averageTimePerLoop = 0;
-let numberLoops = 0;
-let previousTime = 0;
-for (let i = 0; i < 100; i++) {
-  getErrorList(isian);
-  totalTime = performance.now();
-  numberLoops += 1;
-  averageTimePerLoop = totalTime / numberLoops;
-  console.log({ totalTime, averageTimePerLoop, numberLoops });
-}
 let errorList = getErrorList(isian);
-console.log("Final", { totalTime, averageTimePerLoop, numberLoops });
 for (error of errorList) {
   document
     .getElementById("test")
