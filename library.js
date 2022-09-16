@@ -2023,7 +2023,11 @@ function getErrorList(obj, cons = CONSTRAINT, nomorUrutArt = 0, max_art = 0) {
   }
 
   if (nomorUrutArt > 0) {
-    let ArtLink = setLink(`ART nomor urut : ${nomorUrutArt}`, nomorUrutArt);
+    let ArtLink = setLink(
+      `ART nomor urut : ${nomorUrutArt}`,
+      nomorUrutArt,
+      (openModal = true)
+    );
     error_list = error_list.map((error) => `${ArtLink} ${error}`);
   }
 
