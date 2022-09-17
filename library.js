@@ -282,6 +282,22 @@ const CONSTRAINT = {
     max: 2,
     format_number: true,
   },
+  r501f: {
+    filled: {
+      type: 0,
+    },
+    min: 1,
+    max: 2,
+    format_number: true,
+  },
+  r501g: {
+    filled: {
+      type: 0,
+    },
+    min: 1,
+    max: 2,
+    format_number: true,
+  },
 
   r501a_bln: {
     filled: {
@@ -442,6 +458,71 @@ const CONSTRAINT = {
     format_number: true,
     program: true,
     bulan: "r501e_bln",
+  },
+  r501f_bln: {
+    filled: {
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501f",
+          operator: "=",
+        },
+      ],
+    },
+    min: 1,
+    max: 12,
+    format_number: true,
+  },
+  r501f_thn: {
+    filled: {
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501f",
+          operator: "=",
+        },
+      ],
+    },
+
+    min: 2021,
+    max: 2022,
+    format_number: true,
+    program: true,
+    bulan: "r501f_bln",
+  },
+  r501g_bln: {
+    filled: {
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501g",
+          operator: "=",
+        },
+      ],
+    },
+    min: 1,
+    max: 12,
+    format_number: true,
+  },
+  r501g_thn: {
+    filled: {
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501g",
+          operator: "=",
+        },
+      ],
+    },
+    min: 2021,
+    max: 2022,
+    format_number: true,
+    program: true,
+    bulan: "r501g_bln",
   },
 
   r502a: {
@@ -1447,9 +1528,14 @@ const goToAnggotaKeluargaVariable = (id) => {
 const isAlphabetString = (kata) => /^[a-zA-Z\s]+$/.test(kata);
 const isBlankChar = (char) => String(char).length < 1 || char == null;
 // const setLink = (namaVar) => `<a href="#${namaVar}">${namaVar}</a>`;
-const setLink = (variableName, id = 0, art = false) => {
+const setLink = (variableName, id = 0, art = false, href = "") => {
   let blok4 = variableName[1] == 4;
   let variableLink = "";
+  if (href.length > 0) {
+    variableLink = `<a href="#${href}">${variableName}</a>`;
+
+    return variableLink;
+  }
   if (!art) {
     variableLink = `<a href="#${variableName}">${variableName}</a>`;
     return variableLink;
@@ -1731,14 +1817,7 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
   let isBlank = true;
   let variableDependentLink = setLink(variableDependent, id);
   let variableIndependentLink = "";
-  try {
-    variableIndependentLink = setLink(
-      filled.constraint.variableIndependent,
-      id
-    );
-  } catch {
-    variableIndependentLink = "";
-  }
+
   if (filled.type == 0) {
     //untuk case boolean atau 0
 
@@ -1757,10 +1836,16 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
 
     // untuk setiap constraint
     for (i in filled.constraint) {
-      console.log({ isBLok4: filled.constraint.blok4, var: variableDependent });
+      let constraint = filled.constraint[i];
+
+      try {
+        variableIndependentLink = setLink(constraint.variableIndependent, id);
+      } catch {
+        variableIndependentLink = "";
+      }
+
       // let variableIndependentLink = setLink(constraint.variableIndependent);
       // let variableDependentLink = setLink(variableDependent);
-      let constraint = filled.constraint[i];
       isBlank =
         !String(objek[variableDependent]).length ||
         objek[variableDependent] == null;
@@ -1898,7 +1983,7 @@ function getErrorList(obj, cons = CONSTRAINT, nomorUrutArt = 0, max_art = 0) {
       // cek apakah jumlah blok 4 = 112
       if (!cekJumlahArt(obj["blok_4"].length, obj["r112"])) {
         error_list.push(
-          `Jumlah ART pada${setLink(
+          `Jumlah ART pada ${setLink(
             "blok_4"
           )} tidak sama dengan isian ${setLink("r112")}`
         );
@@ -1925,11 +2010,21 @@ function getErrorList(obj, cons = CONSTRAINT, nomorUrutArt = 0, max_art = 0) {
         }
         // PR
         if (jumlah_krt > 1) {
-          pesan = `Jumlah kepala keluarga tidak boleh lebih dari 1`;
+          pesan = `Jumlah ${setLink(
+            "Kepala Keluarga",
+            0,
+            false,
+            "blok_4"
+          )} tidak boleh lebih dari satu`;
           error_list.push(pesan);
         }
         if (jumlah_suami_istri > 1) {
-          pesan = `Jumlah suami/istri tidak boleh lebih dari 1`;
+          pesan = `Jumlah ${setLink(
+            "Suami/istri",
+            0,
+            false,
+            "blok_4"
+          )} tidak boleh lebih dari satu`;
           error_list.push(pesan);
         }
         //push jika error art lebih dari 1 alias ada
@@ -1998,7 +2093,7 @@ function getErrorList(obj, cons = CONSTRAINT, nomorUrutArt = 0, max_art = 0) {
     };
 
     if (numeric.max.length > 0 && typeof numeric.max != "number") {
-      numeric.max = max_art;
+      numeric.max = Number(max_art);
     }
 
     let hasilNumeric = numCheck(numeric, obj[prop]);

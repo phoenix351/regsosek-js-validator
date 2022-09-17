@@ -30,8 +30,8 @@ const isian = {
 
   blok_4: [
     {
-      id: 1,
-      r401: 1,
+      id: 9,
+      r401: 9,
       r402: "Muhammad Putra",
       r403: 7103091912880021,
       r404: 1,
@@ -90,7 +90,7 @@ const isian = {
       r406tgl: 13,
       r406bln: 12,
       r406thn: 1990,
-      r407: 20,
+      r407: 35,
       r408: 1,
       r409: 1,
       r410: null,
@@ -128,7 +128,7 @@ const isian = {
       r431b: 1,
       r431c: 1,
       r431d: 2,
-      r431e: undefined,
+      r431e: 2,
       r431f: 20,
     },
     {
