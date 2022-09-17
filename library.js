@@ -1440,7 +1440,7 @@ function arrayToString(ar) {
   return pesan;
 }
 const goToAnggotaKeluargaVariable = (id) => {
-  openModal(`/index.php?r=krt/updateart&id=${id}`);
+  openModal(`./index.php?r=krt/updateart&id=${id}`);
   //setTimeOut(document.getElementById(variableName).scrollIntoView(), 0);
   return 0;
 };
@@ -1782,8 +1782,8 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
         let tupleString = constraint.value.map((val) => String(val));
         let valueString = String(objek[constraint.variableIndependent]);
         isRequired = tupleString.includes(valueString);
+        let valueAsString = arrayToString(constraint.value);
         if (isRequired && isBlank) {
-          let valueAsString = arrayToString(constraint.value);
           pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} bernilai  ${valueAsString}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
