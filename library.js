@@ -1665,7 +1665,7 @@ function numCheck(numeric, value) {
 
   if (numeric.variableDependent == "r502a") {
     //cek kasus
-    if (value == 1 && ![2, 3].includes(numeric.nilai_gas)) {
+    if (value == 1 && ![2, 3].includes(Number(numeric.nilai_gas))) {
       // kasus 1 ; r502 = 1 namun r308 bukan 2 atau 3
       pesan += `Isian ${variableDependentLink} bernilai 1 namun <a href="#r308">r308</a> bukan 2 atau 3`;
     } else if (value != 1 && [2, 3].includes(numeric.nilai_gas)) {
