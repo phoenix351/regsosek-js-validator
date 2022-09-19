@@ -57,6 +57,7 @@ const CONSTRAINT = {
       type: 0,
     },
     min: 1,
+    max: 3,
     format_number: true,
   },
   r112: {
@@ -77,6 +78,8 @@ const CONSTRAINT = {
     filled: {
       type: 0,
     },
+    min: 0,
+    max: 2,
     format_number: true,
   },
   r301a: {
