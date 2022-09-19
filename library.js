@@ -1403,7 +1403,7 @@ const CONSTRAINT = {
       filled: {
         type: "0",
       },
-      min: 1,
+      min: 0,
       max: 15,
       allowNullAs99: true,
       format_number: true,
@@ -1498,7 +1498,7 @@ const CONSTRAINT = {
           },
         ],
       },
-      min: 1,
+      min: 0,
       max: 31,
       allowNullAs99: true,
       format_number: true,
