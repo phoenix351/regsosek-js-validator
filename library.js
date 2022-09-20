@@ -1972,7 +1972,13 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
 const cekJumlahArt = (jumlahArt, r112) =>
   Number(jumlahArt) == Number(r112) ? true : false;
 
-function getErrorList(obj, cons = CONSTRAINT, nomorUrutArt = 0, max_art = 0) {
+function getErrorList(
+  obj,
+  cons = CONSTRAINT,
+  nomorUrutArt = 0,
+  max_art = 0,
+  id_db = 0
+) {
   /*
     obj merupakan variable untuk mempresentasikan Objek kuesioner K yang berisikan nilai-nilai
     cons merupakan variable berisi batasan-batasan variable
@@ -2001,11 +2007,13 @@ function getErrorList(obj, cons = CONSTRAINT, nomorUrutArt = 0, max_art = 0) {
       for (blok_4_i in obj["blok_4"]) {
         let objek_blok_4 = obj["blok_4"][blok_4_i];
         // panggil get error list untuk blok 4
+        let id_db = obj["id"] ?? 0;
         let error_art = getErrorList(
           objek_blok_4,
           blok_4_const,
           Number(obj["blok_4"][blok_4_i]["r401"]),
-          obj["r112"]
+          obj["r112"],
+          id_db
         );
         if ([1, 2].includes(obj["blok_4"][blok_4_i]["r409"])) {
           jumlah_krt += obj["blok_4"][blok_4_i]["r409"] == 1 ? 1 : 0;
@@ -2120,7 +2128,8 @@ function getErrorList(obj, cons = CONSTRAINT, nomorUrutArt = 0, max_art = 0) {
     }
   }
 
-  if (nomorUrutArt > 0) {
+  if (id_db > 0) {
+    nomorUrutArt = nomorUrutArt > 0 ? nomorUrutArt : "(blank)";
     let ArtLink = setLink(`ART nomor urut : ${nomorUrutArt}`, obj["id"], true);
     error_list = error_list.map((error) => `${ArtLink} ${error}`);
   }
