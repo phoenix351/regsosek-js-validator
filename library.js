@@ -1977,7 +1977,7 @@ function getErrorList(
   cons = CONSTRAINT,
   nomorUrutArt = 0,
   max_art = 0,
-  id_db = 0
+  id_db = -1
 ) {
   /*
     obj merupakan variable untuk mempresentasikan Objek kuesioner K yang berisikan nilai-nilai
@@ -2007,7 +2007,7 @@ function getErrorList(
       for (blok_4_i in obj["blok_4"]) {
         let objek_blok_4 = obj["blok_4"][blok_4_i];
         // panggil get error list untuk blok 4
-        let id_db = obj["id"] ?? 0;
+        let id_db = obj["id"] ?? -1;
         let error_art = getErrorList(
           objek_blok_4,
           blok_4_const,
@@ -2128,7 +2128,7 @@ function getErrorList(
     }
   }
 
-  if (id_db > 0) {
+  if (id_db >= 0) {
     nomorUrutArt = nomorUrutArt > 0 ? nomorUrutArt : "(blank)";
     let ArtLink = setLink(`ART nomor urut : ${nomorUrutArt}`, obj["id"], true);
     error_list = error_list.map((error) => `${ArtLink} ${error}`);
