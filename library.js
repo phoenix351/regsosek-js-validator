@@ -303,31 +303,13 @@ const CONSTRAINT = {
   },
 
   r501a_bln: {
-    filled: {
-      type: 1,
-      constraint: [
-        {
-          value: 1,
-          variableIndependent: "r501a",
-          operator: "=",
-        },
-      ],
-    },
+    filled: { type: false },
     min: 1,
     max: 12,
     format_number: true,
   },
   r501a_thn: {
-    filled: {
-      type: 1,
-      constraint: [
-        {
-          value: 1,
-          variableIndependent: "r501a",
-          operator: "=",
-        },
-      ],
-    },
+    filled: { type: false },
     min: 2021,
     max: 2022,
     format_number: true,
@@ -335,31 +317,13 @@ const CONSTRAINT = {
     bulan: "r501a_bln",
   },
   r501b_bln: {
-    filled: {
-      type: 1,
-      constraint: [
-        {
-          value: 1,
-          variableIndependent: "r501b",
-          operator: "=",
-        },
-      ],
-    },
+    filled: { type: false },
     min: 1,
     max: 12,
     format_number: true,
   },
   r501b_thn: {
-    filled: {
-      type: 1,
-      constraint: [
-        {
-          value: 1,
-          variableIndependent: "r501b",
-          operator: "=",
-        },
-      ],
-    },
+    filled: { type: false },
     min: 2021,
     max: 2022,
     format_number: true,
@@ -367,31 +331,13 @@ const CONSTRAINT = {
     bulan: "r501b_bln",
   },
   r501c_bln: {
-    filled: {
-      type: 1,
-      constraint: [
-        {
-          value: 1,
-          variableIndependent: "r501c",
-          operator: "=",
-        },
-      ],
-    },
+    filled: { type: false },
     min: 1,
     max: 12,
     format_number: true,
   },
   r501c_thn: {
-    filled: {
-      type: 1,
-      constraint: [
-        {
-          value: 1,
-          variableIndependent: "r501c",
-          operator: "=",
-        },
-      ],
-    },
+    filled: { type: false },
     min: 2021,
     max: 2022,
     format_number: true,
@@ -399,31 +345,13 @@ const CONSTRAINT = {
     bulan: "r501c_bln",
   },
   r501d_bln: {
-    filled: {
-      type: 1,
-      constraint: [
-        {
-          value: 1,
-          variableIndependent: "r501d",
-          operator: "=",
-        },
-      ],
-    },
+    filled: { type: false },
     min: 1,
     max: 12,
     format_number: true,
   },
   r501d_thn: {
-    filled: {
-      type: 1,
-      constraint: [
-        {
-          value: 1,
-          variableIndependent: "r501d",
-          operator: "=",
-        },
-      ],
-    },
+    filled: { type: false },
     min: 2021,
     max: 2022,
     format_number: true,
@@ -431,31 +359,13 @@ const CONSTRAINT = {
     bulan: "r501d_bln",
   },
   r501e_bln: {
-    filled: {
-      type: 1,
-      constraint: [
-        {
-          value: 1,
-          variableIndependent: "r501e",
-          operator: "=",
-        },
-      ],
-    },
+    filled: { type: false },
     min: 1,
     max: 12,
     format_number: true,
   },
   r501e_thn: {
-    filled: {
-      type: 1,
-      constraint: [
-        {
-          value: 1,
-          variableIndependent: "r501e",
-          operator: "=",
-        },
-      ],
-    },
+    filled: { type: false },
     min: 2021,
     max: 2022,
     format_number: true,
@@ -463,31 +373,13 @@ const CONSTRAINT = {
     bulan: "r501e_bln",
   },
   r501f_bln: {
-    filled: {
-      type: 1,
-      constraint: [
-        {
-          value: 1,
-          variableIndependent: "r501f",
-          operator: "=",
-        },
-      ],
-    },
+    filled: { type: false },
     min: 1,
     max: 12,
     format_number: true,
   },
   r501f_thn: {
-    filled: {
-      type: 1,
-      constraint: [
-        {
-          value: 1,
-          variableIndependent: "r501f",
-          operator: "=",
-        },
-      ],
-    },
+    filled: { type: false },
 
     min: 2021,
     max: 2022,
@@ -496,31 +388,13 @@ const CONSTRAINT = {
     bulan: "r501f_bln",
   },
   r501g_bln: {
-    filled: {
-      type: 1,
-      constraint: [
-        {
-          value: 1,
-          variableIndependent: "r501g",
-          operator: "=",
-        },
-      ],
-    },
+    filled: { type: false },
     min: 1,
     max: 12,
     format_number: true,
   },
   r501g_thn: {
-    filled: {
-      type: 1,
-      constraint: [
-        {
-          value: 1,
-          variableIndependent: "r501g",
-          operator: "=",
-        },
-      ],
-    },
+    filled: { type: false },
     min: 2021,
     max: 2022,
     format_number: true,
@@ -1902,8 +1776,9 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
         let variableIndependent = constraint.variableIndependent;
         let variableIndependentValue = objek[constraint.variableIndependent];
         let { min, max } = constraint.value;
-        isRequired =
-          variableIndependentValue >= min && variableIndependent <= max;
+        let cekMin = variableIndependentValue >= min;
+        let cekMax = variableIndependentValue <= max;
+        isRequired = cekMin && cekMax;
 
         if (isRequired && isBlank) {
           pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} berada dalam range ${min}-${max}`;
