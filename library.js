@@ -1695,7 +1695,7 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
   let variableDependentLink = setLink(variableDependent, id);
   let variableIndependentLink = "";
 
-  if (filled.type == 0) {
+  if (filled.type === 0) {
     //untuk case boolean atau 0
 
     // Jika panjanganya kurang dari 1 atau undefined
