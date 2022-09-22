@@ -669,6 +669,7 @@ const CONSTRAINT = {
       },
       min: 1,
       max: 31,
+      nullValue: 98,
       format_number: true,
     },
     //bulan lahir
@@ -687,6 +688,7 @@ const CONSTRAINT = {
       },
       min: 1,
       max: 12,
+      nullValue: 98,
       format_number: true,
     },
     //tahun lahir
@@ -1282,7 +1284,7 @@ const CONSTRAINT = {
       },
       min: 0,
       max: 15,
-      allowNullAs99: true,
+      nullValue: 99,
       format_number: true,
     },
     // prakerja
@@ -1377,7 +1379,7 @@ const CONSTRAINT = {
       },
       min: 0,
       max: 31,
-      allowNullAs99: true,
+      nullValue: 98,
       format_number: true,
     },
   },
@@ -1463,7 +1465,7 @@ function numCheck(numeric, value) {
         nilai_listrik: 4,
         nilai_gas : 1
         tuple_num : false
-        allowNullAs99 : false
+        nullValue : false
 
     }
     value : nilai variable,
@@ -1510,7 +1512,11 @@ function numCheck(numeric, value) {
   //cek max jika nilai max lebih dari 0
 
   if (numeric.max > 0) {
-    if (value > numeric.max && !(value == 99 && numeric.allowNullAs99)) {
+    let isMoreThanMax = value > numeric.max;
+    let isEqualsWithNullValue = value == numeric.nullValue;
+    let isNullValue = numeric.nullValue;
+    console.log({ isMoreThanMax, isEqualsWithNullValue, isNullValue });
+    if (isMoreThanMax && !(isEqualsWithNullValue && isNullValue)) {
       pesan += `Isian ${variableDependentLink} tidak boleh lebih dari ${numeric.max}`;
       return pesan;
     }
@@ -1974,7 +1980,7 @@ function getErrorList(
       nilai_listrik: obj["r307a"],
       nilai_gas: obj["r308"],
       tuple_num: cons[prop]["tuple_num"] ?? false,
-      allowNullAs99: cons[prop]["allowNullAs99"] ?? false,
+      nullValue: cons[prop]["nullValue"] ?? false,
       id: nomorUrutArt,
     };
 
