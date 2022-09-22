@@ -57,7 +57,6 @@ const CONSTRAINT = {
       type: 0,
     },
     min: 1,
-    max: 3,
     format_number: true,
   },
   r112: {
@@ -78,8 +77,6 @@ const CONSTRAINT = {
     filled: {
       type: 0,
     },
-    min: 0,
-    max: 2,
     format_number: true,
   },
   r301a: {
@@ -285,31 +282,33 @@ const CONSTRAINT = {
     max: 2,
     format_number: true,
   },
-  r501f: {
-    filled: {
-      type: 0,
-    },
-    min: 1,
-    max: 2,
-    format_number: true,
-  },
-  r501g: {
-    filled: {
-      type: 0,
-    },
-    min: 1,
-    max: 2,
-    format_number: true,
-  },
 
   r501a_bln: {
-    filled: { type: false },
+    filled: {
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501a",
+          operator: "=",
+        },
+      ],
+    },
     min: 1,
     max: 12,
     format_number: true,
   },
   r501a_thn: {
-    filled: { type: false },
+    filled: {
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501a",
+          operator: "=",
+        },
+      ],
+    },
     min: 2021,
     max: 2022,
     format_number: true,
@@ -317,13 +316,31 @@ const CONSTRAINT = {
     bulan: "r501a_bln",
   },
   r501b_bln: {
-    filled: { type: false },
+    filled: {
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501b",
+          operator: "=",
+        },
+      ],
+    },
     min: 1,
     max: 12,
     format_number: true,
   },
   r501b_thn: {
-    filled: { type: false },
+    filled: {
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501b",
+          operator: "=",
+        },
+      ],
+    },
     min: 2021,
     max: 2022,
     format_number: true,
@@ -331,13 +348,31 @@ const CONSTRAINT = {
     bulan: "r501b_bln",
   },
   r501c_bln: {
-    filled: { type: false },
+    filled: {
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501c",
+          operator: "=",
+        },
+      ],
+    },
     min: 1,
     max: 12,
     format_number: true,
   },
   r501c_thn: {
-    filled: { type: false },
+    filled: {
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501c",
+          operator: "=",
+        },
+      ],
+    },
     min: 2021,
     max: 2022,
     format_number: true,
@@ -345,13 +380,31 @@ const CONSTRAINT = {
     bulan: "r501c_bln",
   },
   r501d_bln: {
-    filled: { type: false },
+    filled: {
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501d",
+          operator: "=",
+        },
+      ],
+    },
     min: 1,
     max: 12,
     format_number: true,
   },
   r501d_thn: {
-    filled: { type: false },
+    filled: {
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501d",
+          operator: "=",
+        },
+      ],
+    },
     min: 2021,
     max: 2022,
     format_number: true,
@@ -359,47 +412,36 @@ const CONSTRAINT = {
     bulan: "r501d_bln",
   },
   r501e_bln: {
-    filled: { type: false },
+    filled: {
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501e",
+          operator: "=",
+        },
+      ],
+    },
     min: 1,
     max: 12,
     format_number: true,
   },
   r501e_thn: {
-    filled: { type: false },
+    filled: {
+      type: 1,
+      constraint: [
+        {
+          value: 1,
+          variableIndependent: "r501e",
+          operator: "=",
+        },
+      ],
+    },
     min: 2021,
     max: 2022,
     format_number: true,
     program: true,
     bulan: "r501e_bln",
-  },
-  r501f_bln: {
-    filled: { type: false },
-    min: 1,
-    max: 12,
-    format_number: true,
-  },
-  r501f_thn: {
-    filled: { type: false },
-
-    min: 2021,
-    max: 2022,
-    format_number: true,
-    program: true,
-    bulan: "r501f_bln",
-  },
-  r501g_bln: {
-    filled: { type: false },
-    min: 1,
-    max: 12,
-    format_number: true,
-  },
-  r501g_thn: {
-    filled: { type: false },
-    min: 2021,
-    max: 2022,
-    format_number: true,
-    program: true,
-    bulan: "r501g_bln",
   },
 
   r502a: {
@@ -599,7 +641,6 @@ const CONSTRAINT = {
 
     // Nomor urut anggota keluarga
     r401: {
-      blok4: true,
       filled: {
         type: 0,
       },
@@ -609,16 +650,13 @@ const CONSTRAINT = {
     },
     //nama anggota keluarga
     r402: {
-      blok4: true,
       filled: {
         type: 0,
-        blok4: true,
       },
       alphabet_only: true,
     },
     //nik
     r403: {
-      blok4: true,
       filled: {
         type: 0,
       },
@@ -627,7 +665,6 @@ const CONSTRAINT = {
     },
     //keterangan keberadaan anggota keluarga
     r404: {
-      blok4: true,
       filled: {
         type: 0,
       },
@@ -637,7 +674,6 @@ const CONSTRAINT = {
     },
     //jenis kelamin
     r405: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -655,7 +691,6 @@ const CONSTRAINT = {
     },
     //tanggal lahir
     r406tgl: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -669,12 +704,10 @@ const CONSTRAINT = {
       },
       min: 1,
       max: 31,
-      nullValue: 98,
       format_number: true,
     },
     //bulan lahir
     r406bln: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -688,12 +721,10 @@ const CONSTRAINT = {
       },
       min: 1,
       max: 12,
-      nullValue: 98,
       format_number: true,
     },
     //tahun lahir
     r406thn: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -711,7 +742,6 @@ const CONSTRAINT = {
     },
     //umur
     r407: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -729,7 +759,6 @@ const CONSTRAINT = {
     },
     //status perkaawinan
     r408: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -747,7 +776,6 @@ const CONSTRAINT = {
     },
     //status hubungan dengan kepala keluarga
     r409: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -766,7 +794,6 @@ const CONSTRAINT = {
 
     //status kehamilan
     r410: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -784,7 +811,6 @@ const CONSTRAINT = {
     },
     // kartu identitas
     r411: {
-      blok4: true,
       filled: {
         type: 0,
       },
@@ -798,7 +824,6 @@ const CONSTRAINT = {
     //partisipasi sekolah
 
     r412: {
-      blok4: true,
       filled: {
         type: 0,
       },
@@ -808,7 +833,6 @@ const CONSTRAINT = {
     },
     //jenjang tertinggi yang pernah diduduki
     r413: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -826,7 +850,6 @@ const CONSTRAINT = {
     },
     // kelas tertinggi
     r414: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -844,7 +867,6 @@ const CONSTRAINT = {
     },
     //ijazah tertinggi
     r415: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -864,7 +886,6 @@ const CONSTRAINT = {
 
     //apakah bekerja/membantu ?
     r416a: {
-      blok4: true,
       filled: {
         type: 0,
       },
@@ -874,7 +895,6 @@ const CONSTRAINT = {
     },
     // jam kerja
     r416b: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -892,7 +912,6 @@ const CONSTRAINT = {
     },
     //lapangan usaha
     r417: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -910,7 +929,6 @@ const CONSTRAINT = {
     },
     //status pekerjaan utama
     r418: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -928,7 +946,6 @@ const CONSTRAINT = {
     },
     //punya npwp ?
     r419: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -948,7 +965,6 @@ const CONSTRAINT = {
 
     //apakah memliki ?
     r420: {
-      blok4: true,
       filled: {
         type: 0,
       },
@@ -958,7 +974,6 @@ const CONSTRAINT = {
     },
     //lapangan usaha dari usaha
     r421: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -976,7 +991,6 @@ const CONSTRAINT = {
     },
     //jumlah pekerja dibayar
     r422: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -994,7 +1008,6 @@ const CONSTRAINT = {
     },
     //jumlah pekerja tidak dibayar
     r423: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1012,7 +1025,6 @@ const CONSTRAINT = {
     },
     //kepemilikan perizinan usaha
     r424: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1030,7 +1042,6 @@ const CONSTRAINT = {
     },
     //omzet
     r425: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1048,7 +1059,6 @@ const CONSTRAINT = {
     },
     //penggunaan internet  dalam usaha
     r426: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1069,7 +1079,6 @@ const CONSTRAINT = {
 
     //status gizi anak
     r427: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1087,7 +1096,6 @@ const CONSTRAINT = {
     },
     //melihat
     r428a: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1105,7 +1113,6 @@ const CONSTRAINT = {
     },
     //mendengar
     r428b: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1123,7 +1130,6 @@ const CONSTRAINT = {
     },
     //mobilitas
     r428c: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1141,7 +1147,6 @@ const CONSTRAINT = {
     },
     //motorik halus
     r428d: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1159,7 +1164,6 @@ const CONSTRAINT = {
     },
     //belajar
     r428f: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1177,7 +1181,6 @@ const CONSTRAINT = {
     },
     //komunikasi
     r428g: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1195,7 +1198,6 @@ const CONSTRAINT = {
     },
     // mengurus diri sendiri
     r428h: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1213,7 +1215,6 @@ const CONSTRAINT = {
     },
     //mengingat/konsentrasi
     r428i: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1231,7 +1232,6 @@ const CONSTRAINT = {
     },
     //kesedihan dan depresi
     r428j: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1250,7 +1250,6 @@ const CONSTRAINT = {
 
     //apakah ada pengasuh ?
     r429: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1267,7 +1266,6 @@ const CONSTRAINT = {
     },
     //penyakit kronis/menahun
     r430: {
-      blok4: true,
       filled: {
         type: 0,
       },
@@ -1278,18 +1276,16 @@ const CONSTRAINT = {
 
     //jaminan kesehatan
     r431a: {
-      blok4: true,
       filled: {
         type: "0",
       },
-      min: 0,
+      min: 1,
       max: 15,
-      nullValue: 99,
+      allowNullAs99: true,
       format_number: true,
     },
     // prakerja
     r431b: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1308,7 +1304,6 @@ const CONSTRAINT = {
     },
     //kur
     r431c: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1327,7 +1322,6 @@ const CONSTRAINT = {
     },
     //pembiayaan umi
     r431d: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1346,7 +1340,6 @@ const CONSTRAINT = {
     },
     //pip
     r431e: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1365,7 +1358,6 @@ const CONSTRAINT = {
     },
     // jaminan ketenagakerjaan
     r431f: {
-      blok4: true,
       filled: {
         type: "1",
         constraint: [
@@ -1377,9 +1369,9 @@ const CONSTRAINT = {
           },
         ],
       },
-      min: 0,
+      min: 1,
       max: 31,
-      nullValue: 98,
+      allowNullAs99: true,
       format_number: true,
     },
   },
@@ -1399,27 +1391,21 @@ function arrayToString(ar) {
   }
   return pesan;
 }
-const goToAnggotaKeluargaVariable = (id) => {
-  openModal(`./index.php?r=krt/updateart&id=${id}`);
-  //setTimeOut(document.getElementById(variableName).scrollIntoView(), 0);
+const goToAnggotaKeluargaVariable = (id, variableName) => {
+  openModal(`/index.php?r=krt/updateart&id=${id}`);
+  setTimeOut(document.getElementById(variableName).scrollIntoView(), 0);
   return 0;
 };
 const isAlphabetString = (kata) => /^[a-zA-Z\s]+$/.test(kata);
 const isBlankChar = (char) => String(char).length < 1 || char == null;
 // const setLink = (namaVar) => `<a href="#${namaVar}">${namaVar}</a>`;
-const setLink = (variableName, id = 0, art = false, href = "") => {
-  let blok4 = variableName[1] == 4;
+const setLink = (variableName, blok4 = false, id = 0) => {
   let variableLink = "";
-  if (href.length > 0) {
-    variableLink = `<a href="#${href}">${variableName}</a>`;
-
-    return variableLink;
-  }
-  if (!art) {
+  if (!blok4) {
     variableLink = `<a href="#${variableName}">${variableName}</a>`;
     return variableLink;
   } else {
-    variableLink = `<a href="#" onClick="goToAnggotaKeluargaVariable('${id}')">${variableName}</a>`;
+    variableLink = `<a href="#" onClick="goToAnggotaKeluargaVariable('${id}','${variableName}')">${variableName}</a>`;
     return variableLink;
   }
 };
@@ -1435,18 +1421,21 @@ function charCheck(char) {
     
     */
   let pesan = "";
-  let variableDependentLink = setLink(char.variableDependent, char.id);
 
   if (char.len && String(char.value).length != char.len) {
-    pesan += `Isian ${variableDependentLink} panjangnya harus ${char.len} karakter`;
+    pesan += `Isian ${setLink(char.variableDependent)} panjangnya harus ${
+      char.len
+    } karakter`;
     return pesan;
   } else if (char.alphabet_only && !isAlphabetString(char.value)) {
-    pesan += `Isian ${variableDependentLink}  hanya boleh berisi alphabet dan spasi `;
+    pesan += `Isian ${setLink(
+      char.variableDependent
+    )}  hanya boleh berisi alphabet dan spasi `;
     return pesan;
   } else if (char.tuple && char.tuple.includes(char.value)) {
-    pesan += `Isian ${variableDependentLink} harus bernilai ${arrayToString(
-      char.tuple
-    )}`;
+    pesan += `Isian ${setLink(
+      char.variableDependent
+    )} harus bernilai ${arrayToString(char.tuple)}`;
   }
   return pesan;
 }
@@ -1465,15 +1454,13 @@ function numCheck(numeric, value) {
         nilai_listrik: 4,
         nilai_gas : 1
         tuple_num : false
-        nullValue : false
+        allowNullAs99 : false
 
     }
     value : nilai variable,
     */
 
   let pesan = "";
-  let variableDependentLink = setLink(numeric.variableDependent, numeric.id);
-
   //cek apakah bertipe numeric
 
   if (numeric.format_number) {
@@ -1482,7 +1469,9 @@ function numCheck(numeric, value) {
 
     //jika nan maka return error
     if (String(Number(value_converted)).toLowerCase() == "nan") {
-      pesan += `Isian ${variableDependentLink} harus berisikan angka`;
+      pesan += `Isian ${setLink(
+        numeric.variableDependent
+      )} harus berisikan angka`;
       return pesan;
     }
   }
@@ -1493,10 +1482,14 @@ function numCheck(numeric, value) {
   if (numeric.program == true) {
     //case lebih dari  oktober 2022
     if ((value == 2022 && numeric.bulan > 10) || value > 2022) {
-      pesan += `Isian ${variableDependentLink} lebih dari periode yang telah ditetapkan (Oktober 2022)`;
+      pesan += `Isian ${setLink(
+        numeric.variableDependent
+      )} lebih dari periode yang telah ditetapkan (Oktober 2022)`;
       return pesan;
     } else if ((value == 2021 && numeric.bulan < 10) || value < 2021) {
-      pesan += `Isian ${variableDependentLink} kurang dari periode yang telah ditetapkan (Oktober 2021)`;
+      pesan += `Isian ${setLink(
+        numeric.variableDependent
+      )} kurang dari periode yang telah ditetapkan (Oktober 2021)`;
       return pesan;
     }
   }
@@ -1504,7 +1497,9 @@ function numCheck(numeric, value) {
   // cek min jika min > 0
   if (numeric.min > 0) {
     if (value < numeric.min) {
-      pesan += `Isian ${variableDependentLink} tidak boleh kurang dari ${numeric.min}`;
+      pesan += `Isian ${setLink(
+        numeric.variableDependent
+      )} tidak boleh kurang dari ${numeric.min}`;
       return pesan;
     }
   }
@@ -1512,12 +1507,10 @@ function numCheck(numeric, value) {
   //cek max jika nilai max lebih dari 0
 
   if (numeric.max > 0) {
-    let isMoreThanMax = value > numeric.max;
-    let isEqualsWithNullValue = value == numeric.nullValue;
-    let isNullValue = numeric.nullValue;
-    console.log({ isMoreThanMax, isEqualsWithNullValue, isNullValue });
-    if (isMoreThanMax && !(isEqualsWithNullValue && isNullValue)) {
-      pesan += `Isian ${variableDependentLink} tidak boleh lebih dari ${numeric.max}`;
+    if (value > numeric.max && !(value == 99 && numeric.allowNullAs99)) {
+      pesan += `Isian ${setLink(
+        numeric.variableDependent
+      )} tidak boleh lebih dari ${numeric.max}`;
       return pesan;
     }
   }
@@ -1528,9 +1521,9 @@ function numCheck(numeric, value) {
     let valueString = String(value);
     let logika = !tupleString.includes(valueString);
     if (logika) {
-      pesan += `Isian ${variableDependentLink} tidak bernilai ${arrayToString(
-        tupleString
-      )}`;
+      pesan += `Isian ${setLink(
+        numeric.variableDependent
+      )} tidak bernilai ${arrayToString(tupleString)}`;
       return pesan;
     }
   }
@@ -1538,9 +1531,9 @@ function numCheck(numeric, value) {
   //cek apakah butuh listrik namun tidak ada listrik di r307
   let listrik_cek = numeric.butuh_listrik && numeric.nilai_listrik == 4;
   if (listrik_cek) {
-    pesan += `Isian ${variableDependentLink} bernilai 1 maka isian ${setLink(
-      "r307"
-    )} tidak boleh bernilai 4`;
+    pesan += `Isian ${setLink(
+      numeric.variableDependent
+    )} bernilai 1 maka isian r307 tidak boleh bernilai 4`;
     return pesan;
   }
 
@@ -1548,18 +1541,22 @@ function numCheck(numeric, value) {
 
   if (numeric.variableDependent == "r502a") {
     //cek kasus
-    if (value == 1 && ![2, 3].includes(Number(numeric.nilai_gas))) {
+    if (value == 1 && ![2, 3].includes(numeric.nilai_gas)) {
       // kasus 1 ; r502 = 1 namun r308 bukan 2 atau 3
-      pesan += `Isian ${variableDependentLink} bernilai 1 namun <a href="#r308">r308</a> bukan 2 atau 3`;
-    } else if (value != 1 && [2, 3].includes(Number(numeric.nilai_gas))) {
+      pesan += `Isian ${setLink(
+        numeric.variableDependent
+      )} bernilai 1 namun <a href="#r308">r308</a> bukan 2 atau 3`;
+    } else if (value != 1 && [2, 3].includes(numeric.nilai_gas)) {
       // kasus 2; r308 2 atau 3 namun r502 != 1
-      pesan += `Isian ${variableDependentLink} tidak bernilai 1 namun <a href="#r308">r308</a> bernilai 2 atau 3`;
+      pesan += `Isian ${setLink(
+        numeric.variableDependent
+      )} tidak bernilai 1 namun <a href="#r308">r308</a> bernilai 2 atau 3`;
     }
   }
 
   return pesan;
 }
-function handleSpecialConstraint(constraintName, constraintObject, id = 0) {
+function handleSpecialConstraint(constraintName, constraintObject) {
   let errorList = [];
   if (constraintName == "elderOrDifable") {
     /*
@@ -1588,8 +1585,6 @@ function handleSpecialConstraint(constraintName, constraintObject, id = 0) {
     const isBlank = isBlankChar(r429);
     let isDifable = false;
     let lastPropDifable = "";
-    let r407Link = setLink("r407", id);
-    let r429Link = setLink("r429", id);
     for (prop in constraintObject) {
       if (prop.slice(0, 4) == "r428") {
         isDifable = [1, 2].includes(constraintObject[prop]) ? true : false;
@@ -1607,24 +1602,29 @@ function handleSpecialConstraint(constraintName, constraintObject, id = 0) {
     }
 
     if (r407 >= 60 && isBlank) {
-      let message = `${r407Link} lebih dari 60, Namun ${r429Link}kosong`;
+      let message = `${setLink("r407")} lebih dari 60, Namun ${setLink(
+        "r429"
+      )}kosong`;
       let error_var = "R429";
       errorList.push({ error_var, message });
     } else if (r407 < 60 && !isBlank) {
-      let message = `${r407Link} kurang dari 60, Namun ${r429Link} terisi`;
+      let message = `${setLink("r407")} kurang dari 60, Namun ${setLink(
+        "r429"
+      )} terisi`;
       let error_var = "R429";
       errorList.push({ error_var, message });
     }
 
     if (isDifable && isBlank) {
-      let message = `${setLink(
-        lastPropDifable,
-        id
-      )} bernilai 1 atau 2 , Namun ${r429Link} kosong`;
+      let message = `${lastPropDifable} bernilai 1 atau 2 , Namun ${setLink(
+        "r429"
+      )} kosong`;
       let error_var = "R429";
       errorList.push({ error_var, message });
     } else if (!isDifable && !isBlank) {
-      let message = `R428a-R428j tidak ada yang bernilai 1 atau 2 , Namun ${r429Link} terisi`;
+      let message = `R428a-R428j tidak ada yang bernilai 1 atau 2 , Namun ${setLink(
+        "r429"
+      )} terisi`;
       let error_var = "R429";
       errorList.push({ error_var, message });
     }
@@ -1646,29 +1646,35 @@ function handleSpecialConstraint(constraintName, constraintObject, id = 0) {
     let isFertile = r407 > 9 && r407 < 54;
     let isMarried = [2, 3, 4].includes(r408);
     let is410Blank = String(r410).length < 1 || r410 == null;
-    let r405Link = setLink("r405", id);
-    let r407Link = setLink("r407", id);
-    let r408Link = setLink("r408", id);
-    let r410Link = setLink("r410", id);
 
     if (isWomen && isFertile && isMarried && is410Blank) {
       let error_var = "r410";
-      let message = `${r405Link} Wanita dengan ${r407Link} berada dalam range 10-54 tahun, dan ${r408Link} pernah kawin, Namun isian ${r410Link} Kosong`;
+      let message = `${setLink("r405")} Wanita dengan ${setLink(
+        "r407"
+      )} berada dalam range 10-54 tahun, dan ${setLink(
+        "r408"
+      )} pernah kawin, Namun isian ${setLink("r410")} Kosong`;
       errorList.push({ error_var, message });
     } else if ((!isWomen || !isFertile || !isMarried) && !is410Blank) {
       // jika salah satu tidak terpenuhi namun tidak blank
       if (!isWomen) {
-        let message = `${r405Link} bukan wanita, Namun ${r410Link} terisi`;
+        let message = `${setLink("r405")} bukan wanita, Namun ${setLink(
+          "r410"
+        )} terisi`;
         let error_var = "R405";
         errorList.push({ error_var, message });
       }
       if (!isFertile) {
-        let message = `${r407Link} diluar range 10-54 tahun, Namun ${r410Link} terisi`;
+        let message = `${setLink(
+          "r407"
+        )} diluar range 10-54 tahun, Namun ${setLink("r410")} terisi`;
         let error_var = "R407";
         errorList.push({ error_var, message });
       }
       if (!isMarried) {
-        let message = `${r408Link} belum pernah menikah, Namun ${r410Link} terisi`;
+        let message = `${setLink("r408")} belum pernah menikah, Namun ${setLink(
+          "r410"
+        )} terisi`;
         let error_var = "R408";
         errorList.push({ error_var, message });
       }
@@ -1676,7 +1682,7 @@ function handleSpecialConstraint(constraintName, constraintObject, id = 0) {
   }
   return errorList;
 }
-function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
+function isFilledProcessor({ filled, objek, variableDependent }) {
   /*
     Filled merupakan objek dengan isi
     {
@@ -1698,10 +1704,8 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
   let list_pesan = [];
   let isRequired = false;
   let isBlank = true;
-  let variableDependentLink = setLink(variableDependent, id);
-  let variableIndependentLink = "";
 
-  if (filled.type === 0) {
+  if (filled.type == 0) {
     //untuk case boolean atau 0
 
     // Jika panjanganya kurang dari 1 atau undefined
@@ -1709,7 +1713,9 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
     isBlank = isBlankChar(objek[variableDependent]);
 
     if (isRequired && isBlank) {
-      pesan = `Isian ${variableDependentLink} tidak boleh kosong atau blank`;
+      pesan = `Isian ${setLink(
+        variableDependent
+      )} tidak boleh kosong atau blank`;
       list_pesan.push(pesan);
     }
   } else if (filled.type == 1) {
@@ -1719,16 +1725,9 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
 
     // untuk setiap constraint
     for (i in filled.constraint) {
-      let constraint = filled.constraint[i];
-
-      try {
-        variableIndependentLink = setLink(constraint.variableIndependent, id);
-      } catch {
-        variableIndependentLink = "";
-      }
-
       // let variableIndependentLink = setLink(constraint.variableIndependent);
       // let variableDependentLink = setLink(variableDependent);
+      let constraint = filled.constraint[i];
       isBlank =
         !String(objek[variableDependent]).length ||
         objek[variableDependent] == null;
@@ -1740,57 +1739,97 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
 
         if (isRequired && isBlank) {
           //jika required maka cek apakah blank ?
-          pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} bernilai ${constraint.value}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} harus terisi karena isian ${setLink(
+            constraint.variableIndependent
+          )} bernilai ${constraint.value}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          pesan = `Isian ${variableDependentLink} harus kosong karena isian ${variableIndependentLink} bernilai bukan ${constraint.value}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} harus kosong karena isian ${setLink(
+            constraint.variableIndependent
+          )} bernilai bukan ${constraint.value}`;
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == "in") {
         let tupleString = constraint.value.map((val) => String(val));
         let valueString = String(objek[constraint.variableIndependent]);
-        isRequired = tupleString.includes(valueString);
-        let valueAsString = arrayToString(constraint.value);
+        isRequired = constraint.blok4
+          ? tupleString.includes(valueString)
+          : tupleString.includes(valueString);
         if (isRequired && isBlank) {
-          pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} bernilai  ${valueAsString}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} harus terisi karena isian ${
+            constraint.variableIndependent
+          } bernilai  ${arrayToString(constraint.value)}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          pesan = `Isian ${variableDependentLink} harus kosong karena isian ${variableIndependentLink} bernilai bukan  ${valueAsString}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} harus kosong karena isian ${
+            constraint.variableIndependent
+          } bernilai bukan  ${arrayToString(constraint.value)}`;
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == ">") {
         isRequired = objek[constraint.variableIndependent] > constraint.value;
 
         if (isRequired && isBlank) {
-          pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} bernilai lebih dari ${constraint.value}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} harus terisi karena isian ${setLink(
+            constraint.variableIndependent
+          )} bernilai lebih dari ${constraint.value}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          pesan = `Isian ${variableDependentLink} terisi tetapi isian ${variableIndependentLink} bernilai kurang dari ${constraint.value}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} terisi tetapi isian ${setLink(
+            constraint.variableIndependent
+          )} bernilai kurang dari ${constraint.value}`;
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == "<") {
         isRequired = objek[constraint.variableIndependent] < constraint.value;
 
         if (isRequired && isBlank) {
-          pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} bernilai tidak kurang dari ${constraint.value}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} harus terisi karena isian ${setLink(
+            constraint.variableIndependent
+          )} bernilai tidak kurang dari ${constraint.value}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          pesan = `Isian ${variableDependentLink} terisi, namun isian ${variableIndependentLink} lebih dari ${constraint.value}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} terisi, namun isian ${setLink(
+            constraint.variableIndependent
+          )} lebih dari ${constraint.value}`;
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == "minMax") {
         let variableIndependent = constraint.variableIndependent;
         let variableIndependentValue = objek[constraint.variableIndependent];
         let { min, max } = constraint.value;
-        let cekMin = variableIndependentValue >= min;
-        let cekMax = variableIndependentValue <= max;
-        isRequired = cekMin && cekMax;
+        isRequired =
+          variableIndependentValue >= min && variableIndependent <= max;
 
         if (isRequired && isBlank) {
-          pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} berada dalam range ${min}-${max}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} harus terisi karena isian ${setLink(
+            variableIndependent
+          )} berada dalam range ${min}-${max}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          pesan = `Isian ${variableDependentLink} terisi namun isian ${variableIndependentLink} tidak berada dalam range ${min}-${max}`;
+          pesan = `Isian ${setLink(
+            variableDependent
+          )} terisi namun isian ${setLink(
+            variableIndependent
+          )} tidak berada dalam range ${min}-${max}`;
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == "special") {
@@ -1853,13 +1892,7 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
 const cekJumlahArt = (jumlahArt, r112) =>
   Number(jumlahArt) == Number(r112) ? true : false;
 
-function getErrorList(
-  obj,
-  cons = CONSTRAINT,
-  nomorUrutArt = 0,
-  max_art = 0,
-  id_db = -1
-) {
+function getErrorList(obj, cons = CONSTRAINT, nomorUrutArt = 0, max_art = 0) {
   /*
     obj merupakan variable untuk mempresentasikan Objek kuesioner K yang berisikan nilai-nilai
     cons merupakan variable berisi batasan-batasan variable
@@ -1873,7 +1906,7 @@ function getErrorList(
       // cek apakah jumlah blok 4 = 112
       if (!cekJumlahArt(obj["blok_4"].length, obj["r112"])) {
         error_list.push(
-          `Jumlah ART pada ${setLink(
+          `Jumlah ART pada${setLink(
             "blok_4"
           )} tidak sama dengan isian ${setLink("r112")}`
         );
@@ -1888,13 +1921,11 @@ function getErrorList(
       for (blok_4_i in obj["blok_4"]) {
         let objek_blok_4 = obj["blok_4"][blok_4_i];
         // panggil get error list untuk blok 4
-        let id_db = obj["id"] ?? -1;
         let error_art = getErrorList(
           objek_blok_4,
           blok_4_const,
           Number(obj["blok_4"][blok_4_i]["r401"]),
-          obj["r112"],
-          id_db
+          obj["r112"]
         );
         if ([1, 2].includes(obj["blok_4"][blok_4_i]["r409"])) {
           jumlah_krt += obj["blok_4"][blok_4_i]["r409"] == 1 ? 1 : 0;
@@ -1902,21 +1933,11 @@ function getErrorList(
         }
         // PR
         if (jumlah_krt > 1) {
-          pesan = `Jumlah ${setLink(
-            "Kepala Keluarga",
-            0,
-            false,
-            "blok_4"
-          )} tidak boleh lebih dari satu`;
+          pesan = `Jumlah kepala keluarga tidak boleh lebih dari 1`;
           error_list.push(pesan);
         }
         if (jumlah_suami_istri > 1) {
-          pesan = `Jumlah ${setLink(
-            "Suami/istri",
-            0,
-            false,
-            "blok_4"
-          )} tidak boleh lebih dari satu`;
+          pesan = `Jumlah suami/istri tidak boleh lebih dari 1`;
           error_list.push(pesan);
         }
         //push jika error art lebih dari 1 alias ada
@@ -1944,7 +1965,6 @@ function getErrorList(
         filled: cons[prop]["filled"],
         objek: obj,
         variableDependent: prop,
-        id: nomorUrutArt,
       });
       if (list_pesan.length > 0) {
         for (i in list_pesan) {
@@ -1956,7 +1976,6 @@ function getErrorList(
         filled: cons[prop]["filled"],
         objek: obj,
         variableDependent: prop,
-        id: nomorUrutArt,
       });
       if (list_pesan.length > 0) {
         for (i in list_pesan) {
@@ -1980,12 +1999,11 @@ function getErrorList(
       nilai_listrik: obj["r307a"],
       nilai_gas: obj["r308"],
       tuple_num: cons[prop]["tuple_num"] ?? false,
-      nullValue: cons[prop]["nullValue"] ?? false,
-      id: nomorUrutArt,
+      allowNullAs99: cons[prop]["allowNullAs99"] ?? false,
     };
 
     if (numeric.max.length > 0 && typeof numeric.max != "number") {
-      numeric.max = Number(max_art);
+      numeric.max = max_art;
     }
 
     let hasilNumeric = numCheck(numeric, obj[prop]);
@@ -2001,18 +2019,14 @@ function getErrorList(
       alphabet_only: cons[prop]["alphabet_only"] ?? false,
       value: obj[prop],
       tuple: cons[prop]["tuple"] ?? false,
-      id: nomorUrutArt,
     });
 
     if (hasilChar.length > 0) {
       error_list.push(hasilChar);
     }
   }
-
-  if (id_db >= 0) {
-    nomorUrutArt = nomorUrutArt > 0 ? nomorUrutArt : "(blank)";
-    let ArtLink = setLink(`ART nomor urut : ${nomorUrutArt}`, obj["id"], true);
-    error_list = error_list.map((error) => `${ArtLink} ${error}`);
+  if (nomorUrutArt > 0) {
+    error_list = error_list.map((p) => `ART nomor urut : ${nomorUrutArt} ${p}`);
   }
 
   //console.log({ error_list });
