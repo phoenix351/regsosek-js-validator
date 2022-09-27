@@ -306,6 +306,7 @@ const CONSTRAINT = {
     filled: { type: false },
     min: 1,
     max: 12,
+    nullValue: 98,
     format_number: true,
   },
   r501a_thn: {
@@ -320,6 +321,7 @@ const CONSTRAINT = {
     filled: { type: false },
     min: 1,
     max: 12,
+    nullValue: 98,
     format_number: true,
   },
   r501b_thn: {
@@ -334,6 +336,7 @@ const CONSTRAINT = {
     filled: { type: false },
     min: 1,
     max: 12,
+    nullValue: 98,
     format_number: true,
   },
   r501c_thn: {
@@ -348,6 +351,7 @@ const CONSTRAINT = {
     filled: { type: false },
     min: 1,
     max: 12,
+    nullValue: 98,
     format_number: true,
   },
   r501d_thn: {
@@ -362,6 +366,7 @@ const CONSTRAINT = {
     filled: { type: false },
     min: 1,
     max: 12,
+    nullValue: 98,
     format_number: true,
   },
   r501e_thn: {
@@ -376,6 +381,7 @@ const CONSTRAINT = {
     filled: { type: false },
     min: 1,
     max: 12,
+    nullValue: 98,
     format_number: true,
   },
   r501f_thn: {
@@ -391,6 +397,7 @@ const CONSTRAINT = {
     filled: { type: false },
     min: 1,
     max: 12,
+    nullValue: 98,
     format_number: true,
   },
   r501g_thn: {
@@ -604,7 +611,6 @@ const CONSTRAINT = {
         type: 0,
       },
       min: 1,
-      max: "r112",
       format_number: true,
     },
     //nama anggota keluarga
@@ -1379,7 +1385,7 @@ const CONSTRAINT = {
       },
       min: 0,
       max: 31,
-      nullValue: 98,
+      nullValue: 99,
       format_number: true,
     },
   },
@@ -1408,7 +1414,6 @@ const isAlphabetString = (kata) => /^[a-zA-Z\s]+$/.test(kata);
 const isBlankChar = (char) => String(char).length < 1 || char == null;
 // const setLink = (namaVar) => `<a href="#${namaVar}">${namaVar}</a>`;
 const setLink = (variableName, id = 0, art = false, href = "") => {
-  let blok4 = variableName[1] == 4;
   let variableLink = "";
   if (href.length > 0) {
     variableLink = `<a href="#${href}">${variableName}</a>`;
@@ -1473,6 +1478,7 @@ function numCheck(numeric, value) {
 
   let pesan = "";
   let variableDependentLink = setLink(numeric.variableDependent, numeric.id);
+  let r308Link = setLink("r308");
 
   //cek apakah bertipe numeric
 
@@ -1515,7 +1521,6 @@ function numCheck(numeric, value) {
     let isMoreThanMax = value > numeric.max;
     let isEqualsWithNullValue = value == numeric.nullValue;
     let isNullValue = numeric.nullValue;
-    console.log({ isMoreThanMax, isEqualsWithNullValue, isNullValue });
     if (isMoreThanMax && !(isEqualsWithNullValue && isNullValue)) {
       pesan += `Isian ${variableDependentLink} tidak boleh lebih dari ${numeric.max}`;
       return pesan;
@@ -1547,13 +1552,14 @@ function numCheck(numeric, value) {
   // kasus gas >= 5,5 kg
 
   if (numeric.variableDependent == "r502a") {
+    // console.log({ value, gas: numeric.nilai_gas });
     //cek kasus
     if (value == 1 && ![2, 3].includes(Number(numeric.nilai_gas))) {
       // kasus 1 ; r502 = 1 namun r308 bukan 2 atau 3
-      pesan += `Isian ${variableDependentLink} bernilai 1 namun <a href="#r308">r308</a> bukan 2 atau 3`;
+      pesan += `Isian ${variableDependentLink} bernilai 1 namun ${r308Link} bukan 2 atau 3`;
     } else if (value != 1 && [2, 3].includes(Number(numeric.nilai_gas))) {
       // kasus 2; r308 2 atau 3 namun r502 != 1
-      pesan += `Isian ${variableDependentLink} tidak bernilai 1 namun <a href="#r308">r308</a> bernilai 2 atau 3`;
+      pesan += `Isian ${variableDependentLink} tidak bernilai 1 namun ${r308Link} bernilai 2 atau 3`;
     }
   }
 
@@ -1676,6 +1682,7 @@ function handleSpecialConstraint(constraintName, constraintObject, id = 0) {
   }
   return errorList;
 }
+const generateErrorMessage = (isRequired, isBlank) => {};
 function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
   /*
     Filled merupakan objek dengan isi
@@ -1775,6 +1782,7 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
           pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} bernilai tidak kurang dari ${constraint.value}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
+          console.log({ objek, isRequired, isBlank });
           pesan = `Isian ${variableDependentLink} terisi, namun isian ${variableIndependentLink} lebih dari ${constraint.value}`;
           list_pesan.push(pesan);
         }
@@ -1850,9 +1858,17 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
   }
   return { list_pesan, isRequired, isBlank };
 }
-const cekJumlahArt = (jumlahArt, r112) =>
-  Number(jumlahArt) == Number(r112) ? true : false;
-
+const hitungAnggotaTinggalBersama = (blok4) =>
+  blok4.reduce((jumlahAnggota, anggota) => {
+    return [1, 5].includes(Number(anggota["r404"]))
+      ? jumlahAnggota + 1
+      : jumlahAnggota;
+  }, 0);
+const cekJumlahArt = (blok4, r112) => {
+  const jumlahAnggotaTinggalBersama = hitungAnggotaTinggalBersama(blok4);
+  console.log({ jumlahAnggotaTinggalBersama, blok4, r112 });
+  return Number(jumlahAnggotaTinggalBersama) == Number(r112) ? true : false;
+};
 function getErrorList(
   obj,
   cons = CONSTRAINT,
@@ -1871,9 +1887,9 @@ function getErrorList(
     //cek apakah termasuk blok 4
     if (prop == "blok_4") {
       // cek apakah jumlah blok 4 = 112
-      if (!cekJumlahArt(obj["blok_4"].length, obj["r112"])) {
+      if (!cekJumlahArt(obj["blok_4"], obj["r112"])) {
         error_list.push(
-          `Jumlah ART pada ${setLink(
+          `Jumlah Anggota keluarga yang tinggal bersama pada ${setLink(
             "blok_4"
           )} tidak sama dengan isian ${setLink("r112")}`
         );
@@ -1888,7 +1904,8 @@ function getErrorList(
       for (blok_4_i in obj["blok_4"]) {
         let objek_blok_4 = obj["blok_4"][blok_4_i];
         // panggil get error list untuk blok 4
-        let id_db = obj["id"] ?? -1;
+        let id_db = objek_blok_4["id"] ?? -1;
+        console.log({ id_db });
         let error_art = getErrorList(
           objek_blok_4,
           blok_4_const,
@@ -2011,6 +2028,7 @@ function getErrorList(
 
   if (id_db >= 0) {
     nomorUrutArt = nomorUrutArt > 0 ? nomorUrutArt : "(blank)";
+    console.log({ nomorUrutArt });
     let ArtLink = setLink(`ART nomor urut : ${nomorUrutArt}`, obj["id"], true);
     error_list = error_list.map((error) => `${ArtLink} ${error}`);
   }
