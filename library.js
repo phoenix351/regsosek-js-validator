@@ -914,6 +914,13 @@ const CONSTRAINT = {
       max: 26,
       format_number: true,
     },
+
+    r417_desk: {
+      blok4: true,
+      filled: {
+        type: 0,
+      },
+    },
     //status pekerjaan utama
     r418: {
       blok4: true,
@@ -979,6 +986,12 @@ const CONSTRAINT = {
       min: 1,
       max: 26,
       format_number: true,
+    },
+    r421_desk: {
+      blok4: true,
+      filled: {
+        type: 0,
+      },
     },
     //jumlah pekerja dibayar
     r422: {
@@ -1782,7 +1795,7 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
           pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} bernilai tidak kurang dari ${constraint.value}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          console.log({ objek, isRequired, isBlank });
+          // console.log({ objek, isRequired, isBlank });
           pesan = `Isian ${variableDependentLink} terisi, namun isian ${variableIndependentLink} lebih dari ${constraint.value}`;
           list_pesan.push(pesan);
         }
@@ -1866,7 +1879,7 @@ const hitungAnggotaTinggalBersama = (blok4) =>
   }, 0);
 const cekJumlahArt = (blok4, r112) => {
   const jumlahAnggotaTinggalBersama = hitungAnggotaTinggalBersama(blok4);
-  console.log({ jumlahAnggotaTinggalBersama, blok4, r112 });
+  // console.log({ jumlahAnggotaTinggalBersama, blok4, r112 });
   return Number(jumlahAnggotaTinggalBersama) == Number(r112) ? true : false;
 };
 function getErrorList(
@@ -1905,7 +1918,7 @@ function getErrorList(
         let objek_blok_4 = obj["blok_4"][blok_4_i];
         // panggil get error list untuk blok 4
         let id_db = objek_blok_4["id"] ?? -1;
-        console.log({ id_db });
+        // console.log({ id_db });
         let error_art = getErrorList(
           objek_blok_4,
           blok_4_const,
@@ -2028,8 +2041,12 @@ function getErrorList(
 
   if (id_db >= 0) {
     nomorUrutArt = nomorUrutArt > 0 ? nomorUrutArt : "(blank)";
-    console.log({ nomorUrutArt });
-    let ArtLink = setLink(`ART nomor urut : ${nomorUrutArt}`, obj["id"], true);
+    // console.log({ nomorUrutArt });
+    let ArtLink = setLink(
+      `Anggota keluarga nomor urut : ${nomorUrutArt}`,
+      obj["id"],
+      true
+    );
     error_list = error_list.map((error) => `${ArtLink} ${error}`);
   }
 
