@@ -918,7 +918,15 @@ const CONSTRAINT = {
     r417_desk: {
       blok4: true,
       filled: {
-        type: 0,
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r416a",
+            value: 1,
+            operator: "=",
+            blok4: true,
+          },
+        ],
       },
     },
     //status pekerjaan utama
@@ -990,7 +998,15 @@ const CONSTRAINT = {
     r421_desk: {
       blok4: true,
       filled: {
-        type: 0,
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r420",
+            value: 1,
+            operator: "=",
+            blok4: true,
+          },
+        ],
       },
     },
     //jumlah pekerja dibayar
