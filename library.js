@@ -596,7 +596,7 @@ const CONSTRAINT = {
       type: 0,
     },
     min: 1,
-    max: 2,
+    max: 4,
     format_number: true,
   },
 
@@ -638,7 +638,7 @@ const CONSTRAINT = {
         type: 0,
       },
       min: 1,
-      max: 5,
+      max: 6,
       format_number: true,
     },
     //jenis kelamin
@@ -649,7 +649,7 @@ const CONSTRAINT = {
         constraint: [
           {
             variableIndependent: "r404",
-            value: [1, 4],
+            value: [1, 5],
             operator: "in",
             blok4: true,
           },
@@ -667,7 +667,7 @@ const CONSTRAINT = {
         constraint: [
           {
             variableIndependent: "r404",
-            value: [1, 4],
+            value: [1, 5],
             operator: "in",
             blok4: true,
           },
@@ -686,7 +686,7 @@ const CONSTRAINT = {
         constraint: [
           {
             variableIndependent: "r404",
-            value: [1, 4],
+            value: [1, 5],
             operator: "in",
             blok4: true,
           },
@@ -705,7 +705,7 @@ const CONSTRAINT = {
         constraint: [
           {
             variableIndependent: "r404",
-            value: [1, 4],
+            value: [1, 5],
             operator: "in",
             blok4: true,
           },
@@ -723,7 +723,7 @@ const CONSTRAINT = {
         constraint: [
           {
             variableIndependent: "r404",
-            value: [1, 4],
+            value: [1, 5],
             operator: "in",
             blok4: true,
           },
@@ -741,7 +741,7 @@ const CONSTRAINT = {
         constraint: [
           {
             variableIndependent: "r404",
-            value: [1, 4],
+            value: [1, 5],
             operator: "in",
             blok4: true,
           },
@@ -759,7 +759,7 @@ const CONSTRAINT = {
         constraint: [
           {
             variableIndependent: "r404",
-            value: [1, 4],
+            value: [1, 5],
             operator: "in",
             blok4: true,
           },
@@ -792,7 +792,15 @@ const CONSTRAINT = {
     r411: {
       blok4: true,
       filled: {
-        type: 0,
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+        ],
       },
       min: 0,
       max: 5,
@@ -806,7 +814,21 @@ const CONSTRAINT = {
     r412: {
       blok4: true,
       filled: {
-        type: 0,
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
+        ],
       },
       min: 1,
       max: 3,
@@ -819,9 +841,21 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
             variableIndependent: "r412",
             value: [2, 3],
             operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
             blok4: true,
           },
         ],
@@ -837,9 +871,21 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
             variableIndependent: "r412",
             value: [2, 3],
             operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
             blok4: true,
           },
         ],
@@ -855,9 +901,21 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
             variableIndependent: "r412",
             value: [2, 3],
             operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
             blok4: true,
           },
         ],
@@ -872,7 +930,21 @@ const CONSTRAINT = {
     r416a: {
       blok4: true,
       filled: {
-        type: 0,
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
+        ],
       },
       min: 1,
       max: 2,
@@ -884,6 +956,18 @@ const CONSTRAINT = {
       filled: {
         type: "1",
         constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
           {
             variableIndependent: "r416a",
             value: 1,
@@ -903,6 +987,18 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
+          {
             variableIndependent: "r416a",
             value: 1,
             operator: "=",
@@ -921,6 +1017,18 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
+          {
             variableIndependent: "r416a",
             value: 1,
             operator: "=",
@@ -935,6 +1043,18 @@ const CONSTRAINT = {
       filled: {
         type: "1",
         constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
           {
             variableIndependent: "r416a",
             value: 1,
@@ -954,9 +1074,9 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
-            variableIndependent: "r416a",
-            value: 1,
-            operator: "=",
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
             blok4: true,
           },
         ],
@@ -971,7 +1091,21 @@ const CONSTRAINT = {
     r420: {
       blok4: true,
       filled: {
-        type: 0,
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
+        ],
       },
       min: 1,
       max: 2,
@@ -983,6 +1117,18 @@ const CONSTRAINT = {
       filled: {
         type: "1",
         constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
           {
             variableIndependent: "r420",
             value: 1,
@@ -1001,6 +1147,18 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
+          {
             variableIndependent: "r420",
             value: 1,
             operator: "=",
@@ -1015,6 +1173,18 @@ const CONSTRAINT = {
       filled: {
         type: "1",
         constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
           {
             variableIndependent: "r420",
             value: 1,
@@ -1034,6 +1204,18 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
+          {
             variableIndependent: "r420",
             value: 1,
             operator: "=",
@@ -1051,6 +1233,18 @@ const CONSTRAINT = {
       filled: {
         type: "1",
         constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
           {
             variableIndependent: "r420",
             value: 1,
@@ -1070,6 +1264,18 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
+          {
             variableIndependent: "r420",
             value: 1,
             operator: "=",
@@ -1087,6 +1293,18 @@ const CONSTRAINT = {
       filled: {
         type: "1",
         constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
+            blok4: true,
+          },
           {
             variableIndependent: "r420",
             value: 1,
@@ -1127,6 +1345,12 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
             variableIndependent: "r407",
             value: 1,
             operator: ">",
@@ -1144,6 +1368,12 @@ const CONSTRAINT = {
       filled: {
         type: "1",
         constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
           {
             variableIndependent: "r407",
             value: 1,
@@ -1163,6 +1393,12 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
             variableIndependent: "r407",
             value: 1,
             operator: ">",
@@ -1180,6 +1416,12 @@ const CONSTRAINT = {
       filled: {
         type: "1",
         constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
           {
             variableIndependent: "r407",
             value: 1,
@@ -1199,6 +1441,12 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
             variableIndependent: "r407",
             value: 1,
             operator: ">",
@@ -1216,6 +1464,12 @@ const CONSTRAINT = {
       filled: {
         type: "1",
         constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
           {
             variableIndependent: "r407",
             value: 4,
@@ -1235,6 +1489,12 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
             variableIndependent: "r407",
             value: 4,
             operator: ">",
@@ -1253,6 +1513,12 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
             variableIndependent: "r407",
             value: 4,
             operator: ">",
@@ -1270,6 +1536,12 @@ const CONSTRAINT = {
       filled: {
         type: "1",
         constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
           {
             variableIndependent: "r407",
             value: 4,
@@ -1304,7 +1576,15 @@ const CONSTRAINT = {
     r430: {
       blok4: true,
       filled: {
-        type: 0,
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+        ],
       },
       min: 1,
       max: 18,
@@ -1315,7 +1595,15 @@ const CONSTRAINT = {
     r431a: {
       blok4: true,
       filled: {
-        type: "0",
+        type: "1",
+        constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+        ],
       },
       min: 0,
       max: 15,
@@ -1328,6 +1616,12 @@ const CONSTRAINT = {
       filled: {
         type: "1",
         constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
           {
             variableIndependent: "r407",
             value: 4,
@@ -1348,6 +1642,12 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
             variableIndependent: "r407",
             value: 4,
             operator: ">",
@@ -1366,6 +1666,12 @@ const CONSTRAINT = {
       filled: {
         type: "1",
         constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
           {
             variableIndependent: "r407",
             value: 4,
@@ -1386,6 +1692,12 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
             variableIndependent: "r407",
             value: { min: 5, max: 30 },
             operator: "minMax",
@@ -1404,6 +1716,12 @@ const CONSTRAINT = {
       filled: {
         type: "1",
         constraint: [
+          {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
           {
             variableIndependent: "r407",
             value: 14,
@@ -1736,6 +2054,7 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
   let isBlank = true;
   let variableDependentLink = setLink(variableDependent, id);
   let variableIndependentLink = "";
+  let required = true;
 
   if (filled.type === 0) {
     //untuk case boolean atau 0
@@ -1806,9 +2125,16 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
         }
       } else if (constraint.operator == "<") {
         isRequired = objek[constraint.variableIndependent] < constraint.value;
+        if (constraint.variableIndependent == "r407") {
+          console.log({
+            nilai: objek[constraint.variableIndependent],
+            val_cons: constraint.value,
+            isRequired,
+          });
+        }
 
         if (isRequired && isBlank) {
-          pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} bernilai tidak kurang dari ${constraint.value}`;
+          pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} bernilai kurang dari ${constraint.value}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
           // console.log({ objek, isRequired, isBlank });
@@ -1883,6 +2209,10 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
           }
         }
       }
+      required = required * isRequired;
+    }
+    if (!required && isBlank) {
+      list_pesan = [];
     }
   }
   return { list_pesan, isRequired, isBlank };
