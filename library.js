@@ -599,6 +599,21 @@ const CONSTRAINT = {
     max: 4,
     format_number: true,
   },
+  pengeluaran: {
+    filled: {
+      type: "1",
+      constraint: [
+        {
+          variableIndependent: "r111",
+          value: [1, 2],
+          operator: "in",
+          blok4: false,
+        },
+      ],
+    },
+    min: 1000,
+    format_number: true,
+  },
 
   //blok 4
   blok_4: {
@@ -1077,6 +1092,12 @@ const CONSTRAINT = {
             variableIndependent: "r404",
             value: [1, 5],
             operator: "in",
+            blok4: true,
+          },
+          {
+            variableIndependent: "r407",
+            value: 4,
+            operator: ">",
             blok4: true,
           },
         ],
