@@ -1599,6 +1599,85 @@ const CONSTRAINT = {
       max: 2,
       format_number: true,
     },
+
+    // r429: {
+    //   blok4: true,
+    //   filled: {
+    //     type: "or",
+    //     constraint: [
+    //       {
+    //         variableIndependent: "r407",
+    //         value: 59,
+    //         operator: ">",
+    //         blok4: true,
+    //       },
+    //       {
+    //         variableIndependent: "r428a",
+    //         value: [1, 2],
+    //         operator: "in",
+    //         blok4: true,
+    //       },
+    //       {
+    //         variableIndependent: "r428b",
+    //         value: [1, 2],
+    //         operator: "in",
+    //         blok4: true,
+    //       },
+    //       {
+    //         variableIndependent: "r428c",
+    //         value: [1, 2],
+    //         operator: "in",
+    //         blok4: true,
+    //       },
+    //       {
+    //         variableIndependent: "r428d",
+    //         value: [1, 2],
+    //         operator: "in",
+    //         blok4: true,
+    //       },
+    //       {
+    //         variableIndependent: "r428e",
+    //         value: [1, 2],
+    //         operator: "in",
+    //         blok4: true,
+    //       },
+    //       {
+    //         variableIndependent: "r428f",
+    //         value: [1, 2],
+    //         operator: "in",
+    //         blok4: true,
+    //       },
+    //       {
+    //         variableIndependent: "r428g",
+    //         value: [1, 2],
+    //         operator: "in",
+    //         blok4: true,
+    //       },
+    //       {
+    //         variableIndependent: "r428h",
+    //         value: [1, 2],
+    //         operator: "in",
+    //         blok4: true,
+    //       },
+    //       {
+    //         variableIndependent: "r428i",
+    //         value: [1, 2],
+    //         operator: "in",
+    //         blok4: true,
+    //       },
+    //       {
+    //         variableIndependent: "r428j",
+    //         value: [1, 2],
+    //         operator: "in",
+    //         blok4: true,
+    //       },
+    //     ],
+    //   },
+    //   min: 1,
+    //   max: 2,
+    //   format_number: true,
+    // },
+
     //penyakit kronis/menahun
     r430: {
       blok4: true,
@@ -2152,13 +2231,6 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
         }
       } else if (constraint.operator == "<") {
         isRequired = objek[constraint.variableIndependent] < constraint.value;
-        if (constraint.variableIndependent == "r407") {
-          console.log({
-            nilai: objek[constraint.variableIndependent],
-            val_cons: constraint.value,
-            isRequired,
-          });
-        }
 
         if (isRequired && isBlank) {
           pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} bernilai kurang dari ${constraint.value}`;
@@ -2238,6 +2310,7 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
       }
       required = required * isRequired;
     }
+    isRequired = Boolean(required);
     if (!required && isBlank) {
       list_pesan = [];
     }
@@ -2271,8 +2344,15 @@ function getErrorList(
     nomorUrutArt,
     */
   let error_list = [];
+  let isBlok4 = false;
   // loop constraint
+  let arr_prop = [];
   for (prop in cons) {
+    if (prop == "variableDependent") {
+      console.log(cons);
+      break;
+    }
+    arr_prop.push(prop);
     //cek apakah termasuk blok 4
     if (prop == "blok_4") {
       // cek apakah jumlah blok 4 = 112
@@ -2302,6 +2382,7 @@ function getErrorList(
           obj["r112"],
           id_db
         );
+
         if ([1, 2].includes(obj["blok_4"][blok_4_i]["r409"])) {
           jumlah_krt += obj["blok_4"][blok_4_i]["r409"] == 1 ? 1 : 0;
           jumlah_suami_istri += obj["blok_4"][blok_4_i]["r409"] == 2 ? 1 : 0;
@@ -2337,6 +2418,7 @@ function getErrorList(
     //cek Filled
 
     let constraintSpecial = false;
+
     try {
       constraintSpecial = cons[prop]["filled"]["constraint"]["nama"]
         ? true
@@ -2344,6 +2426,7 @@ function getErrorList(
     } catch {
       constraintSpecial = false;
     }
+    let before_after = [prop];
 
     if (constraintSpecial) {
       let { list_pesan } = isFilledProcessor({
@@ -2364,9 +2447,7 @@ function getErrorList(
         variableDependent: prop,
         id: nomorUrutArt,
       });
-      if (prop == "r501a_bln") {
-        console.log({ prop, nilai: obj[prop], isBlank, isRequired });
-      }
+
       if (list_pesan.length > 0) {
         for (i in list_pesan) {
           error_list.push(list_pesan[i]);
@@ -2375,6 +2456,14 @@ function getErrorList(
 
       if (!isRequired && isBlank) {
         continue;
+      }
+      try {
+        let k = cons[prop]["min"] ?? 0;
+      } catch (error) {
+        before_after.push(prop);
+        console.log({ before_after, constraintSpecial, cons });
+
+        prop = before_after[0];
       }
     }
 
