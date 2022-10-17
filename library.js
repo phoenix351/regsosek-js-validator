@@ -1348,6 +1348,12 @@ const CONSTRAINT = {
         type: "1",
         constraint: [
           {
+            variableIndependent: "r404",
+            value: [1, 5],
+            operator: "in",
+            blok4: true,
+          },
+          {
             variableIndependent: "r407",
             value: 5,
             operator: "<",
@@ -2017,7 +2023,7 @@ function handleSpecialConstraint(constraintName, constraintObject, id = 0) {
     // case 1 syarat terpenuhi namun, tidak terisi
     let { r405, r407, r408, r410 } = constraintObject;
     let isWomen = r405 == 2;
-    let isFertile = r407 > 9 && r407 < 54;
+    let isFertile = r407 > 9 && r407 < 55;
     let isMarried = [2, 3, 4].includes(r408);
     let is410Blank = String(r410).length < 1 || r410 == null;
     let r405Link = setLink("r405", id);
@@ -2235,7 +2241,10 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
     if (!required && isBlank) {
       list_pesan = [];
     }
+  } else {
+    isBlank = String(objek[variableDependent]).length > 0 ? false : true;
   }
+
   return { list_pesan, isRequired, isBlank };
 }
 const hitungAnggotaTinggalBersama = (blok4) =>
@@ -2355,17 +2364,22 @@ function getErrorList(
         variableDependent: prop,
         id: nomorUrutArt,
       });
+      if (prop == "r501a_bln") {
+        console.log({ prop, nilai: obj[prop], isBlank, isRequired });
+      }
       if (list_pesan.length > 0) {
         for (i in list_pesan) {
           error_list.push(list_pesan[i]);
         }
       }
-      if (!isRequired || isBlank) {
+
+      if (!isRequired && isBlank) {
         continue;
       }
     }
 
     //cek numeric const
+
     let numeric = {
       variableDependent: prop,
       min: cons[prop]["min"] ?? 0,

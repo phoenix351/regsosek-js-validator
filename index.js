@@ -7,7 +7,7 @@ const isian = {
   r106: "Lingkungan 4",
   r108: "Safe Care",
   r110: "010",
-  r111: 1,
+  r111: "1",
   r112: "6",
   r114: 3020811310980001,
   r115: 1,
@@ -27,6 +27,7 @@ const isian = {
   r309a: "1",
   r309b: 1,
   r310: 1,
+  pengeluaran: 9000,
 
   blok_4: [
     {
@@ -39,11 +40,11 @@ const isian = {
       r406tgl: 15,
       r406bln: 6,
       r406thn: 1988,
-      r407: 25,
+      r407: 5,
       r408: 2,
       r409: 4,
       r410: 25,
-      r411: 4,
+      r411: 2,
       r412: 3,
       r413: 19,
       r414: 8,
@@ -343,7 +344,7 @@ const isian = {
   r501f: 1,
   r501g: 1,
 
-  r501a_bln: 11,
+  r501a_bln: "ASU",
   r501b_bln: undefined,
   r501c_bln: 10,
   r501d_bln: 10,
