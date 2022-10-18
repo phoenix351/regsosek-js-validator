@@ -2007,10 +2007,7 @@ function numCheck(numeric, value) {
   if (numeric.variableDependent == "r502a") {
     // console.log({ value, gas: numeric.nilai_gas });
     //cek kasus
-    if (value == 1 && ![2, 3].includes(Number(numeric.nilai_gas))) {
-      // kasus 1 ; r502 = 1 namun r308 bukan 2 atau 3
-      pesan += `Isian ${variableDependentLink} bernilai 1 namun ${r308Link} bukan 2 atau 3`;
-    } else if (value != 1 && [2, 3].includes(Number(numeric.nilai_gas))) {
+    if (value != 1 && [2, 3].includes(Number(numeric.nilai_gas))) {
       // kasus 2; r308 2 atau 3 namun r502 != 1
       pesan += `Isian ${variableDependentLink} tidak bernilai 1 namun ${r308Link} bernilai 2 atau 3`;
     }
