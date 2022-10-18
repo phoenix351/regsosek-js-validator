@@ -1596,7 +1596,7 @@ const CONSTRAINT = {
         ],
       },
       min: 1,
-      max: 2,
+      max: 3,
       format_number: true,
     },
 
@@ -2480,6 +2480,13 @@ function getErrorList(
       nullValue: cons[prop]["nullValue"] ?? false,
       id: nomorUrutArt,
     };
+
+    if (prop == "r416b") {
+      console.log({ numeric });
+      if ([1, 2, 3, 4, 5].includes(Number(obj["r418"]) ?? 0)) {
+        numeric.min = 0;
+      }
+    }
 
     if (numeric.max.length > 0 && typeof numeric.max != "number") {
       numeric.max = Number(max_art);
