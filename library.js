@@ -2346,7 +2346,6 @@ function getErrorList(
   let arr_prop = [];
   for (prop in cons) {
     if (prop == "variableDependent") {
-      console.log(cons);
       break;
     }
     arr_prop.push(prop);
@@ -2473,7 +2472,7 @@ function getErrorList(
       format_number: cons[prop]["format_number"] ?? false,
       program: cons[prop]["program"] ?? false,
       bulan: obj[cons[prop]["bulan"]] ?? 1,
-      butuh_listrik: cons[prop]["butuh_listrik"] ?? false,
+      butuh_listrik: (cons[prop]["butuh_listrik"] && obj[prop] == 1) ?? false,
       nilai_listrik: obj["r307a"],
       nilai_gas: obj["r308"],
       tuple_num: cons[prop]["tuple_num"] ?? false,
