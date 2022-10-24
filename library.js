@@ -2017,6 +2017,8 @@ function numCheck(numeric, value) {
 }
 function handleSpecialConstraint(constraintName, constraintObject, id = 0) {
   let errorList = [];
+  let isRequired = false;
+
   if (constraintName == "elderOrDifable") {
     /*
     constraintObject : {
@@ -2057,33 +2059,37 @@ function handleSpecialConstraint(constraintName, constraintObject, id = 0) {
     }
 
     if (r407 >= 60 && !isBlank) {
-      return errorList;
+      return { isRequired, errorList };
     } else if (isDifable && !isBlank) {
-      return errorList;
+      return { isRequired, errorList };
     }
 
     if (r407 >= 60 && isBlank) {
-      let message = `${r407Link} lebih dari 60, Namun ${r429Link}kosong`;
+      let message = `Isian ${r429Link} harus terisi, karena isian ${r407Link} lebih dari 60 tahun`;
       let error_var = "R429";
       errorList.push({ error_var, message });
     } else if (r407 < 60 && !isBlank) {
-      let message = `${r407Link} kurang dari 60, Namun ${r429Link} terisi`;
+      let message = `Isian ${r429Link} terisi, namun isian ${r407Link} kurang dari 60 tahun`;
       let error_var = "R429";
       errorList.push({ error_var, message });
     }
 
     if (isDifable && isBlank) {
-      let message = `${setLink(
+      let message = `Isian ${r429Link} harus terisi, karena isian ${setLink(
         lastPropDifable,
         id
-      )} bernilai 1 atau 2 , Namun ${r429Link} kosong`;
+      )} bernilai 1 atau 2`;
       let error_var = "R429";
       errorList.push({ error_var, message });
     } else if (!isDifable && !isBlank) {
-      let message = `R428a-R428j tidak ada yang bernilai 1 atau 2 , Namun ${r429Link} terisi`;
+      let message = `Isian ${r429Link} terisi, namun isian R428a-R428j tidak ada yang bernilai 1 atau 2 `;
       let error_var = "R429";
       errorList.push({ error_var, message });
     }
+    // console.log(errorList);
+
+    isRequired = isDifable || Number(r407) >= 60;
+    // console.log({ errorList, isRequired, constraintName, isBlank, isDifable });
   }
   if (constraintName == "wanita fertil") {
     /*
@@ -2106,6 +2112,7 @@ function handleSpecialConstraint(constraintName, constraintObject, id = 0) {
     let r407Link = setLink("r407", id);
     let r408Link = setLink("r408", id);
     let r410Link = setLink("r410", id);
+    isRequired = isWomen && isFertile && isMarried;
 
     if (isWomen && isFertile && isMarried && is410Blank) {
       let error_var = "r410";
@@ -2130,7 +2137,7 @@ function handleSpecialConstraint(constraintName, constraintObject, id = 0) {
       }
     }
   }
-  return errorList;
+  return { isRequired, errorList };
 }
 const generateErrorMessage = (isRequired, isBlank) => {};
 function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
@@ -2294,20 +2301,28 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
           }
           constraintObject["variableDependent"] = variableDependent;
           let constraintName = constraint.nama;
-          let error_410 = handleSpecialConstraint(
+          let { isRequired, errorList } = handleSpecialConstraint(
             constraintName,
             constraintObject
           );
-          if (error_410.length > 0) {
-            for (i in error_410) {
-              list_pesan.push(error_410[i].message);
+
+          required = isRequired;
+          isRequired = isRequired;
+
+          if (errorList.length > 0) {
+            for (i in errorList) {
+              list_pesan.push(errorList[i].message);
             }
           }
         }
       }
+
       required = required * isRequired;
     }
     isRequired = Boolean(required);
+    if (variableDependent == "r429") {
+      // console.log({ required, isBlank });
+    }
     if (!required && isBlank) {
       list_pesan = [];
     }
@@ -2423,7 +2438,13 @@ function getErrorList(
       constraintSpecial = false;
     }
     let before_after = [prop];
+    try {
+      let k = cons[prop]["min"] ?? 0;
+    } catch (error) {
+      before_after.push(prop);
 
+      prop = before_after[0];
+    }
     if (constraintSpecial) {
       let { list_pesan } = isFilledProcessor({
         filled: cons[prop]["filled"],
@@ -2444,6 +2465,8 @@ function getErrorList(
         id: nomorUrutArt,
       });
 
+      if (prop == "variableDependent") {
+      }
       if (list_pesan.length > 0) {
         for (i in list_pesan) {
           error_list.push(list_pesan[i]);
@@ -2457,7 +2480,7 @@ function getErrorList(
         let k = cons[prop]["min"] ?? 0;
       } catch (error) {
         before_after.push(prop);
-        console.log({ before_after, constraintSpecial, cons });
+        // console.log({ before_after, constraintSpecial, cons });
 
         prop = before_after[0];
       }
@@ -2481,7 +2504,6 @@ function getErrorList(
     };
 
     if (prop == "r416b") {
-      console.log({ numeric });
       if ([1, 2, 3, 4, 5].includes(Number(obj["r418"]) ?? 0)) {
         numeric.min = 0;
       }
