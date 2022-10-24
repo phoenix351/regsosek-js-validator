@@ -348,14 +348,34 @@ const CONSTRAINT = {
     bulan: "r501c_bln",
   },
   r501d_bln: {
-    filled: { type: false },
+    filled: {
+      type: "1",
+      constraint: [
+        {
+          variableIndependent: "r307b1",
+          value: 1,
+          operator: "=",
+          blok4: false,
+        },
+      ],
+    },
     min: 1,
     max: 12,
     nullValue: 98,
     format_number: true,
   },
   r501d_thn: {
-    filled: { type: false },
+    filled: {
+      type: "1",
+      constraint: [
+        {
+          variableIndependent: "r307b1",
+          value: 1,
+          operator: "=",
+          blok4: false,
+        },
+      ],
+    },
     min: 2021,
     max: 2022,
     format_number: true,
@@ -2506,6 +2526,16 @@ function getErrorList(
     if (prop == "r416b") {
       if ([1, 2, 3, 4, 5].includes(Number(obj["r418"]) ?? 0)) {
         numeric.min = 0;
+      }
+    }
+
+    if (prop == "r307b1") {
+      if (obj[prop] == 1 && (isBlankChar(obj["r501d"]) || obj["r501d"] == 2)) {
+        error_list.push(
+          `Isian ${setLink(
+            "r501d"
+          )} Tidak sama dengan 1, Padahal isian ${setLink("r307b1")} bernilai 1`
+        );
       }
     }
 
