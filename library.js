@@ -2085,7 +2085,7 @@ function handleSpecialConstraint(constraintName, constraintObject, id = 0) {
     }
 
     if (r407 >= 60 && isBlank) {
-      let message = `Isian ${r429Link} harus terisi, karena isian ${r407Link} lebih dari 60 tahun`;
+      let message = `Isian ${r429Link} kosong, namun isian ${r407Link} lebih dari 60 tahun`;
       let error_var = "R429";
       errorList.push({ error_var, message });
     } else if (r407 < 60 && !isBlank) {
@@ -2095,7 +2095,7 @@ function handleSpecialConstraint(constraintName, constraintObject, id = 0) {
     }
 
     if (isDifable && isBlank) {
-      let message = `Isian ${r429Link} harus terisi, karena isian ${setLink(
+      let message = `Isian ${r429Link} kosong, namun isian ${setLink(
         lastPropDifable,
         id
       )} bernilai 1 atau 2`;
@@ -2106,7 +2106,6 @@ function handleSpecialConstraint(constraintName, constraintObject, id = 0) {
       let error_var = "R429";
       errorList.push({ error_var, message });
     }
-    // console.log(errorList);
 
     isRequired = isDifable || Number(r407) >= 60;
     // console.log({ errorList, isRequired, constraintName, isBlank, isDifable });
@@ -2157,7 +2156,9 @@ function handleSpecialConstraint(constraintName, constraintObject, id = 0) {
       }
     }
   }
-  return { isRequired, errorList };
+  // console.log(errorList, isRequired);
+  let isRequiredInside = isRequired;
+  return { isRequiredInside, errorList };
 }
 const generateErrorMessage = (isRequired, isBlank) => {};
 function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
@@ -2225,10 +2226,10 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
 
         if (isRequired && isBlank) {
           //jika required maka cek apakah blank ?
-          pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} bernilai ${constraint.value}`;
+          pesan = `Isian ${variableDependentLink} kosong, namun isian ${variableIndependentLink} bernilai ${constraint.value}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          pesan = `Isian ${variableDependentLink} harus kosong karena isian ${variableIndependentLink} bernilai bukan ${constraint.value}`;
+          pesan = `Isian ${variableDependentLink} terisi, namun isian ${variableIndependentLink} bernilai bukan ${constraint.value}`;
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == "in") {
@@ -2237,17 +2238,17 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
         isRequired = tupleString.includes(valueString);
         let valueAsString = arrayToString(constraint.value);
         if (isRequired && isBlank) {
-          pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} bernilai  ${valueAsString}`;
+          pesan = `Isian ${variableDependentLink} kosong, namun isian ${variableIndependentLink} bernilai  ${valueAsString}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
-          pesan = `Isian ${variableDependentLink} harus kosong karena isian ${variableIndependentLink} bernilai bukan  ${valueAsString}`;
+          pesan = `Isian ${variableDependentLink} terisi, namun isian ${variableIndependentLink} bernilai bukan  ${valueAsString}`;
           list_pesan.push(pesan);
         }
       } else if (constraint.operator == ">") {
         isRequired = objek[constraint.variableIndependent] > constraint.value;
 
         if (isRequired && isBlank) {
-          pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} bernilai lebih dari ${constraint.value}`;
+          pesan = `Isian ${variableDependentLink} kosong, namun isian ${variableIndependentLink} bernilai lebih dari ${constraint.value}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
           pesan = `Isian ${variableDependentLink} terisi tetapi isian ${variableIndependentLink} bernilai kurang dari ${constraint.value}`;
@@ -2257,7 +2258,7 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
         isRequired = objek[constraint.variableIndependent] < constraint.value;
 
         if (isRequired && isBlank) {
-          pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} bernilai kurang dari ${constraint.value}`;
+          pesan = `Isian ${variableDependentLink} kosong, namun isian ${variableIndependentLink} bernilai kurang dari ${constraint.value}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
           // console.log({ objek, isRequired, isBlank });
@@ -2273,7 +2274,7 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
         isRequired = cekMin && cekMax;
 
         if (isRequired && isBlank) {
-          pesan = `Isian ${variableDependentLink} harus terisi karena isian ${variableIndependentLink} berada dalam range ${min}-${max}`;
+          pesan = `Isian ${variableDependentLink} kosong, namun isian ${variableIndependentLink} berada dalam range ${min}-${max}`;
           list_pesan.push(pesan);
         } else if (!isRequired && !isBlank) {
           pesan = `Isian ${variableDependentLink} terisi namun isian ${variableIndependentLink} tidak berada dalam range ${min}-${max}`;
@@ -2321,13 +2322,12 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
           }
           constraintObject["variableDependent"] = variableDependent;
           let constraintName = constraint.nama;
-          let { isRequired, errorList } = handleSpecialConstraint(
+          let { isRequiredInside, errorList } = handleSpecialConstraint(
             constraintName,
             constraintObject
           );
 
-          required = isRequired;
-          isRequired = isRequired;
+          isRequired = isRequiredInside;
 
           if (errorList.length > 0) {
             for (i in errorList) {
@@ -2338,11 +2338,12 @@ function isFilledProcessor({ filled, objek, variableDependent, id = 0 }) {
       }
 
       required = required * isRequired;
+      if (variableDependent == "r429") {
+        console.log({ required, isRequired, isBlank });
+      }
     }
     isRequired = Boolean(required);
-    if (variableDependent == "r429") {
-      // console.log({ required, isBlank });
-    }
+
     if (!required && isBlank) {
       list_pesan = [];
     }
@@ -2536,6 +2537,24 @@ function getErrorList(
             "r501d"
           )} Tidak sama dengan 1, Padahal isian ${setLink("r307b1")} bernilai 1`
         );
+      }
+    }
+
+    if (prop == "r418") {
+      if (obj[prop]) {
+        // JIKA R418 BERNILAI 1 2 ATAU 3
+        let isPekerjaUsaha = [1, 2, 3].includes(Number(obj[prop]));
+        let isMemilikiUsaha = obj["r420"] == 1;
+
+        if (isPekerjaUsaha && !isMemilikiUsaha) {
+          error_list.push(
+            `Isian ${setLink(
+              "r418"
+            )} Bernilai 1, 2, atau 3. Namun isian ${setLink(
+              "r420"
+            )} tidak bernilai 1`
+          );
+        }
       }
     }
 

@@ -575,9 +575,9 @@ const disaster = {
   r501c: "1",
   r501c_bln: "8",
   r501c_thn: "2021",
-  // r501d: "1",
-  // r501d_bln: "10",
-  // r501d_thn: "2022",
+  r501d: "1",
+  r501d_bln: "10",
+  r501d_thn: "2022",
   r501e: "2",
   r501e_bln: "",
   r501e_thn: "",
@@ -635,7 +635,7 @@ const disaster = {
       r406tgl: 23,
       r406bln: 7,
       r406thn: 1959,
-      r407: "39",
+      r407: "60",
       r408: 2,
       r409: 2,
       r410: null,
@@ -655,7 +655,7 @@ const disaster = {
       r421: "",
       r421_desk: "",
       r422: null,
-      r423: null,
+      r423: 0,
       r424: 11,
       r425: null,
       r426: null,
@@ -708,11 +708,11 @@ const disaster = {
       r414: 8,
       r415: 8,
       r416: null,
-      r416a: 1,
+      r416a: 2,
       r416b: "0",
       r417: "",
       r417_desk: "",
-      r418: 4,
+      r418: 3,
       r419: "1",
       r420: 2,
       r421: "",
@@ -755,3 +755,23 @@ for (error of errorList) {
     );
   nomorTabel++;
 }
+// const numToStringDigit = (num)=> {if(String(num).length>3) {)};
+
+const separateNumString = (num) => {
+  console.log({ num });
+  let strNumArr = String(num).split("");
+  let strNumNew = [];
+
+  let indeksCounter = 1;
+  for (let i = strNumArr.length - 1; i >= 0; i--) {
+    let textTobeAdd = strNumArr[i];
+    if (strNumArr[i - 1] && indeksCounter % 3 === 0) {
+      textTobeAdd = "." + textTobeAdd;
+      // strNumNew.splice(0, 0, ".");
+    }
+    strNumNew.splice(0, 0, textTobeAdd);
+    indeksCounter++;
+  }
+  return String(strNumNew.join(""));
+};
+console.log(separateNumString(1000000));
